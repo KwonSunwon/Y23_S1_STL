@@ -1,53 +1,33 @@
 //-------------------------------------------------------
 // 2023 1학기 STL 3월 13일 (2주 1)
 //-------------------------------------------------------
-// C++ 복습, template
-//-----------------------------------
+// 많은 수의 자료 다루기 - int
+//-------------------------------------------------------
 // 코딩환경 - VS Release/x64, C++표준 - latest, SDL/아니오
 //-------------------------------------------------------
 
+#include <array>
+#include <format>
+#include <fstream>
 #include <iostream>
+
 #include "save.hpp"
 
-// [문제] main()을 고치지 말고 의도대로 실행되게 하라.
-// change() 함수를 한 번만 코딩해서 하라.
-
-class Dog
-{
-private:
-    int num;
-
-public:
-    Dog(int n) : num(n) {};
-    friend std::ostream& operator<<(std::ostream& os, const Dog& dog)
-    {
-        return os << dog.num;
-    }
-};
-
-// template은 선언과 동시에 정의
-// template으로 작성된 소스코드는 모두에게 공개되어 있다.
-// 컴파일러가 소스코드를 확인하고 만들어내야하기 때문에
-template <class T>
-void change(T& a, T& b)
-{
-    T temp{ a };
-    a = b;
-    b = temp;
-}
+// [문제] 파일 "int 천개"에 있는 int 1000개를 메모리에 저장하라
+// int는 텍스트 형식으로 공백으로 분리되어 저장되어 있다
 
 int main()
 {
-    {
-        int a{ 1 }, b{ 2 };
-        change(a, b);
-        std::cout << a << ", " << b << '\n';
+    std::ifstream in { "int 천개" };
+
+    std::array<int, 1000> a; // 앞으로 int[] 사용하지 않는다
+
+    for (int i = 0; i < 1000; ++i) {
+        in >> a[i];
     }
-    {
-        Dog a{ 1 }, b{ 2 };
-        change(a, b);
-        std::cout << a << ", " << b << '\n';
-    }
+
+    auto p = std::max_element(a.begin(), a.end());
+    std::cout << "최댓값 : " << *p << '\n';
 
     save("main.cpp");
 }
