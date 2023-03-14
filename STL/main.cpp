@@ -9,13 +9,8 @@
 #include <array>
 #include <fstream>
 #include <iostream>
-#include <random>
 
 #include "save.hpp"
-
-std::default_random_engine dre;
-std::uniform_int_distribution<int> uidChar{ 'a', 'z' };
-std::uniform_int_distribution uidNum{ 1, 10'000 };
 
 class Dog {
 	// 5byte로 끝낼 수 있지만 속도를 위해 8byte 저장
@@ -24,34 +19,39 @@ class Dog {
 	int n;
 
 public:
-	Dog()
-	{
-		c = uidChar(dre); // ['a', 'z']
-		n = uidNum(dre); // [1, 10'000]
-	}
+	Dog() {}
 
 	friend std::ostream& operator<<(std::ostream& os, const Dog& dog)
 	{
 		return os << "글자 - " << dog.c << ", 숫자 - " << dog.n;
 	}
+
+	friend std::istream& operator>>(std::istream& is, Dog& dog)
+	{
+		is.read((char*)&dog, sizeof(Dog));
+		return is;
+	}
 };
 
-// [문제] Dog 1000 객체를 파일 "Dog 천마리"를 binary mode로 열고
-// 메모리 그대로 파일에 기록하라
+// [문제] Dog 1000 객체가 파일 "Dog 천마리"에 binary mode로 연 파일에
+// write 함수로 메모리 그대로 기록되어 있다.
+// Dog의 정보를 cout으로 화면에 출력하라.
 
 int main()
 {
-	std::array<Dog, 1'000> dogs;
-
-	// std::ofstream out { "Dog 천마리", std::ios::binary };
-	// out.write((char*)&dogs, dogs.size() * sizeof(Dog)); // 8000byte로 저장됨
-
 	std::ifstream in{ "Dog 천마리", std::ios::binary };
-	in.read((char*)&dogs, dogs.size() * sizeof(Dog));
 
-	for (auto& dog : dogs) {
+	if (!in)
+		return 0;
+
+	Dog dog;
+	int cnt{};
+	while (in >> dog) {
 		std::cout << dog << '\n';
+		++cnt;
 	}
 
-	 save("main.cpp");
+	std::cout << "모두 " << cnt << "개 객체를 읽음" << '\n';
+
+	save("main.cpp");
 }
