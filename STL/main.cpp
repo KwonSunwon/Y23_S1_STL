@@ -53,5 +53,6 @@ int main()
 
 	std::cout << "모두 " << cnt << "개 객체를 읽음" << '\n';
 
-	save("main.cpp");
+	//save("main.cpp");
+	git_commit("git_commit() 함수 호출 테스트");
 }

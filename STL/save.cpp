@@ -32,3 +32,9 @@ void save(const std::string& fileName)
     std::vector<char> v{ std::istreambuf_iterator<char>{in}, {} };
     std::copy(v.begin(), v.end(), std::ostream_iterator<char>{out});
 }
+
+void git_commit(const std::string& msg)
+{
+    std::string cmd = "git add . && git commit -m \"" + msg + "\"";
+	system(cmd.c_str());
+}
