@@ -11,20 +11,17 @@
 #include <array>
 #include <format>
 #include <ranges> // C++20
-#include <numeric>
 #include "save.hpp"
 
-std::array<int, 260'000> a; // DATA segment
+std::array<int, 1'990'000'000 / sizeof(int)> a{ 1 }; // DATA segment, 전역공간에서 a; 라고 쓰는 것은 a{}; 과 같다.
+// 1.85GB - 실행 파일의 크기
 
 int main()
 {
-	std::iota(a.begin(), a.end(), 1);
-
-	// 마지막 100개전에서 100개만 출력
 	for (int num : a |
-		std::views::drop(a.size() - 100)) {
+		std::views::take(100)) {
 		std::cout << std::format("{:10}", num);
 	}
 
-	//save("main.cpp");
+	save("main.cpp");
 }
