@@ -22,6 +22,7 @@ int main()
 	for (int num : a) {
 		std::cout << std::format("{:20}", num) << '\n';
 	}
+	// a 를 사용한다고 판단해 STACK에 생성되고 스택오버플로우가 발생해서 프로그램이 종료된다
 
-	//save("main.cpp");
+	save("main.cpp");
 }
