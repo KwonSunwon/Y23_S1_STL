@@ -9,20 +9,21 @@
 #include <iostream>
 #include <array>
 #include <format>
+#include <ranges> // C++20
+#include <numeric>
 #include "save.hpp"
 
 int main()
 {
-	// 여기에서 객체를 생성 -> STACK에 생성
-	std::array<int, 10'000'000> a;
-	// STACK 메모리 공간의 크기를 넘어갔는데 문제가 없는 이유?
-	// -> COMPILER가 자동으로 사용하지 않는 메모리라고 판단하고 제외시킨다
+	std::array<int, 250'000> a;
+
+	std::iota(a.begin(), a.end(), 1);
 
 	// 마지막 100개전에서 100개만 출력
-	for (int num : a) {
-		std::cout << std::format("{:20}", num) << '\n';
+	for (int num : a |
+		std::views::drop(a.size() - 100)) {
+		std::cout << std::format("{:10}", num);
 	}
-	// a 를 사용한다고 판단해 STACK에 생성되고 스택오버플로우가 발생해서 프로그램이 종료된다
 
-	save("main.cpp");
+	//save("main.cpp");
 }
