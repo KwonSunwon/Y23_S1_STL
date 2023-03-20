@@ -9,16 +9,31 @@
 //-------------------------------------------------------
 
 #include <iostream>
+#include <vector>
 #include <array>
+#include <numeric>
 #include "save.hpp"
+
+// [문제] 사용자가 입력한 숫자만큼 int를 저장할 메모리를 생성하라
+// 값을 1부터 시작하는 정수롤 채워나가라
+// 핪계를 화면에 출력하라
+// 예) 10을 입력
+// -> int 10개 공간확보 -> 1 2 3 4 5 6 7 8 9 10
+// 합계는 55
 
 int main()
 {
-	std::array<int, 1000> a;
-	a[0] = 123;
-	a[999] = 456;
-	std::cout << a[0] << ", " << a[999] << '\n';
-	main();
+	std::cout << "생성할 int 개수: ";
+	int num;
+	std::cin >> num;
 
-	save("main.cpp");
+	std::vector<int>* v{ new std::vector<int>(num) };
+
+	std::iota(v->begin(), v->end(), 1);
+
+	auto sum = std::accumulate(v->begin(), v->end(), 0);
+	std::cout << "합계는 " << sum << std::endl;
+
+
+	//save("main.cpp");
 }
