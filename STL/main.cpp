@@ -22,11 +22,16 @@ int main()
 {
 	save("main.cpp");
 
-	try {
-		f();
-	}
-	catch (int) {
-		std::cout << "예외발생" << '\n';
+	int cnt{};
+	while (true) {
+		try {
+			new char[1'000'000'000];
+		}
+		catch ( std::exception& e ) {
+			std::cout << e.what() << '\n';
+			return 0;
+		}
+		std::cout << ++cnt << " 할당 성공" << "\n";
 	}
 }
 
