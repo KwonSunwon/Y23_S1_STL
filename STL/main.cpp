@@ -11,19 +11,17 @@
 #include <algorithm>
 #include "save.hpp"
 
-// [문제] "main.cpp"를 읽어 소문자를 대문자로 변환하여
-// "main_upper.cpp"에 저장하라.
+// [문제] "main.cpp"에 있는 숫자를 '*'로 변환하여 화면에 출력하라
 
 int main()
 {
 	save("main.cpp");
 
 	std::ifstream in{ "main.cpp" };
-	std::ofstream out{ "main_upper.cpp " };
 
 	std::transform(std::istreambuf_iterator<char>{in}, {},
-		std::ostreambuf_iterator<char>{out},
+		std::ostreambuf_iterator<char>{std::cout},
 		[](char c) {
-			return toupper(c);
+			return isdigit(c) ? '*' : c;
 		});
 }
