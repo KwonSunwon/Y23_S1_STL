@@ -13,18 +13,20 @@
 #include <numeric>
 #include "save.hpp"
 
-// [문제] 사용자가 입력한 숫자만큼 int를 저장할 메모리를 생성하라
-// 값을 1부터 시작하는 정수롤 채워나가라
-// 핪계를 화면에 출력하라
-// 이 과정을 반복하라
+// C++ 컴파일러가 값을 결정할 수 있는 순간
+// 1. compile-timeh - array<int, 100> ...
+// 2. run-time		- new int[100] ...
+
 
 int main()
 {
 	int cnt{};
 	while (true) {
 		int num{ 200'000'000 }; // 800MB
+		int* p = new int[num] {};
 
-		std::unique_ptr<int> p{ new int[num] {} };
+		// 예외가 발생 --> 자원이 계속 쌓이게 된다
+
 		std::iota(*p, *p + num, 1);
 
 		long long sum{};
@@ -33,6 +35,8 @@ int main()
 
 		std::cout << "1부터 " << num << "까지 합계 - " << sum << '\n';
 		std::cout << ++cnt << "번 실행" << '\n';
+
+		delete[] p;
 	}
 
 	/*std::vector<int>* v{ new std::vector<int>(num) };
