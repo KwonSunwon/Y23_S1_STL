@@ -7,45 +7,21 @@
 //-------------------------------------------------------
 
 #include <iostream>
-#include <array>
-#include <random>
-#include <format>
-#include <ranges>
-#include <algorithm>
 #include "save.hpp"
 
-// [문제] int 10'000'000 개를 랜덤한 값으로 채운다.
-// 오른차순으로 정렬한라.
-// 끝에 100개만 화면 출력하라.
-
-class Dog {
-public:
-	bool operator()(int a, int b) { return a < b; }
+auto lambda = []() {
+	std::cout << "Hello? my name is lambda!" << '\n';
 };
 
-std::array<int, 10'000'000> numbers;
-
-std::default_random_engine dre;
-std::uniform_int_distribution uid{ 1, 10'000'000 };
-
-bool 어떻게(int a, int b)
-{
-	return a > b; // 내림차순
-}
+class Dog {};
+Dog dog;
 
 int main()
 {
+	// name mangling
+	std::cout << typeid(lambda).name() << '\n';
+
+	std::cout << typeid(dog).name() << '\n';
+
 	save("main.cpp");
-
-	for (int& num : numbers)
-		num = uid(dre);
-
-	// 오름차순 정렬 - qsort( c ) 와 sort( c++ )
-	//std::ranges::sort(numbers); // c++ 20 부터 사용가능
-	std::sort(numbers.begin(), numbers.end(), Dog());
-
-	// 끝에 100개만 출력
-	for (int num : numbers |
-		std::views::drop(numbers.size() - 100))
-		std::cout << std::format("{:10}", num);
 }
