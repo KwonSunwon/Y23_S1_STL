@@ -16,11 +16,50 @@
 #include <functional>
 #include "save.h"
 
+// [문제] 게임의 버튼에 할당된 기능을 바꾼다
+
+void jump()
+{
+	std::cout << "점프" << '\n';
+}
+void slide()
+{
+	std::cout << "슬라이드" << '\n';
+}
+
 int main()
 {
 	save("main.cpp");
 
-	std::function<int(void)> f = main;
+	//std::function<void(void)> aKey = jump;
+	void(*aKey)(void) = jump; // == auto aKey = jump;
+	auto lKey = slide;
 
-	std::cout << sizeof(f) << '\n'; // 64byte
+	while (true) {
+		// 키 설명: a/l 점프/슬라이드, o 옵션, q 끝내기
+		std::cout << "키를 누르세요(a, l, o, q): ";
+		char c;
+		std::cin >> c;
+		
+		switch (c) {
+		case 'a':
+			aKey();
+			break;
+		case 'l':
+			lKey();
+			break;
+		case 'o':
+			if (aKey == jump) {
+				aKey = slide;
+				lKey = jump;
+			}
+			else {
+				aKey = jump;
+				lKey = slide;
+			}
+			break;
+		case 'q':
+			return 0;
+		}
+	}
 }
