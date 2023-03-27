@@ -2,6 +2,10 @@
 // 2023 1학기 STL 3월 27일 (4주 1)
 //-------------------------------------------------------
 // 정렬(sort) - Callable type(호출가능타입)
+// 1. 함수(함수 포인터)
+// 2. 함수 객체(함수호출 연산자()를 오버로딩한 클래스)
+// 3. 람다(이름없는 함수)
+// 4. 멤버함수 포인터
 //-------------------------------------------------------
 // 코딩환경 - VS Release/x64, C++표준 - latest, SDL/아니오
 //-------------------------------------------------------
@@ -9,19 +13,11 @@
 #include <iostream>
 #include "save.hpp"
 
-auto lambda = []() {
-	std::cout << "Hello? my name is lambda!" << '\n';
-};
-
-class Dog {};
-Dog dog;
-
 int main()
 {
-	// name mangling
-	std::cout << typeid(lambda).name() << '\n';
-
-	std::cout << typeid(dog).name() << '\n';
-
 	save("main.cpp");
+
+	int (*main2)(void) = main; // 함수포인터
+	std::cout << "in main" << '\n';
+	main2();
 }
