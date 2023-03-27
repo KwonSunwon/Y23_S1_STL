@@ -6,18 +6,21 @@
 // 2. 함수 객체(함수호출 연산자()를 오버로딩한 클래스)
 // 3. 람다(이름없는 함수)
 // 4. 멤버함수 포인터
+// 
+// 전체를 추상화 한(대표하는) 클래스 -> function
 //-------------------------------------------------------
 // 코딩환경 - VS Release/x64, C++표준 - latest, SDL/아니오
 //-------------------------------------------------------
 
 #include <iostream>
-#include "save.hpp"
+#include <functional>
+#include "save.h"
 
 int main()
 {
 	save("main.cpp");
 
-	int (*main2)(void) = main; // 함수포인터
-	std::cout << "in main" << '\n';
-	main2();
+	std::function<int(void)> f = main;
+
+	std::cout << sizeof(f) << '\n'; // 64byte
 }

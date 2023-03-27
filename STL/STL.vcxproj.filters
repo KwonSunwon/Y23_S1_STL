@@ -23,7 +23,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="save.hpp">
+    <ClInclude Include="save.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

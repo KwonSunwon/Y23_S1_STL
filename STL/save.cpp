@@ -6,7 +6,7 @@
 #include <fstream>
 #include <vector>
 #include <chrono>
-#include "save.hpp"
+#include "save.h"
 
 void save(const std::string& fileName)
 {

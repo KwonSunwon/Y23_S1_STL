@@ -132,7 +132,7 @@
     <ClCompile Include="save.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="save.hpp" />
+    <ClInclude Include="save.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
