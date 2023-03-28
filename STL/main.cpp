@@ -1,65 +1,74 @@
 //-------------------------------------------------------
-// 2023 1학기 STL 3월 27일 (4주 1)
+// 2023 1학기 STL 3월 27일 (4주 2)
 //-------------------------------------------------------
 // 정렬(sort) - Callable type(호출가능타입)
-// 1. 함수(함수 포인터)
-// 2. 함수 객체(함수호출 연산자()를 오버로딩한 클래스)
-// 3. 람다(이름없는 함수)
-// 4. 멤버함수 포인터
-// 
-// 전체를 추상화 한(대표하는) 클래스 -> function
 //-------------------------------------------------------
 // 코딩환경 - VS Release/x64, C++표준 - latest, SDL/아니오
 //-------------------------------------------------------
 
 #include <iostream>
-#include <functional>
+#include <string>
+#include <random>
+#include <format>
+#include <array>
+#include <algorithm>
+#include <ranges>
 #include "save.h"
 
-// [문제] 게임의 버튼에 할당된 기능을 바꾼다
+std::default_random_engine dre;
+std::uniform_int_distribution uidNum{ 0, 100'000 };
+std::uniform_int_distribution uidLen{ 1, 60 };
+std::uniform_int_distribution<int> uidName{ 'a', 'z' };
 
-void jump()
-{
-	std::cout << "점프" << '\n';
-}
-void slide()
-{
-	std::cout << "슬라이드" << '\n';
-}
+class Dog {
+	int num;
+	std::string name;
+
+public:
+	Dog()
+	{
+		// n [0, 100'000], name 은 [1, 60]글자
+		num = uidNum(dre);
+		int len = uidLen(dre);
+		for (int i = 0; i < len; ++i)
+			name += uidName(dre);
+	}
+	void show() const
+	{
+		std::cout << std::format("{:8} - {}", num, name) << '\n';
+	}
+	bool operator<(const Dog& other) const
+	{
+		return num < other.num;
+	}
+
+	int getNum() const
+	{
+		return num;
+	}
+};
+
+// [문제] Dog 객체 100만개를 생성하라.
+// num 기준 오름차순으로 정렬하라
+// 앞에서부터 100개만 출력하라
+
+std::array<Dog, 1'000'000> dogs;
 
 int main()
 {
+	/*std::ranges::sort(dogs, [](Dog a, Dog b) {
+		return a.getNum() < b.getNum();
+		});*/
+
+	/*std::sort(dogs.begin(), dogs.end(), [](Dog a, Dog b) {
+		return a < b;
+		});*/
+
+	std::ranges::sort(dogs, std::less());
+
+	for (const auto& dog : dogs |
+		std::views::take(100))
+		dog.show();
+
 	save("main.cpp");
-
-	//std::function<void(void)> aKey = jump;
-	void(*aKey)(void) = jump; // == auto aKey = jump;
-	auto lKey = slide;
-
-	while (true) {
-		// 키 설명: a/l 점프/슬라이드, o 옵션, q 끝내기
-		std::cout << "키를 누르세요(a, l, o, q): ";
-		char c;
-		std::cin >> c;
-		
-		switch (c) {
-		case 'a':
-			aKey();
-			break;
-		case 'l':
-			lKey();
-			break;
-		case 'o':
-			if (aKey == jump) {
-				aKey = slide;
-				lKey = jump;
-			}
-			else {
-				aKey = jump;
-				lKey = slide;
-			}
-			break;
-		case 'q':
-			return 0;
-		}
-	}
 }
