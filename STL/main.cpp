@@ -1,74 +1,53 @@
 //-------------------------------------------------------
-// 2023 1학기 STL 3월 27일 (4주 2)
+// 2023 1학기 STL 3월 28일 (4주 2)
 //-------------------------------------------------------
-// 정렬(sort) - Callable type(호출가능타입)
+// C++ 클래스 복습 - String 클래스를 만든다.
+// 앞으로 String 클래스를 STL 컨테이너로 발전시킨다.
 //-------------------------------------------------------
 // 코딩환경 - VS Release/x64, C++표준 - latest, SDL/아니오
 //-------------------------------------------------------
 
 #include <iostream>
 #include <string>
-#include <random>
-#include <format>
-#include <array>
-#include <algorithm>
-#include <ranges>
 #include "save.h"
 
-std::default_random_engine dre;
-std::uniform_int_distribution uidNum{ 0, 100'000 };
-std::uniform_int_distribution uidLen{ 1, 60 };
-std::uniform_int_distribution<int> uidName{ 'a', 'z' };
-
-class Dog {
-	int num;
-	std::string name;
+class String {
+	size_t len{};
+	char* p{};		// [도전] unique_ptr<char> p 로 바꿔서 코딩해 볼 것
 
 public:
-	Dog()
+	/*String(const char str[])
 	{
-		// n [0, 100'000], name 은 [1, 60]글자
-		num = uidNum(dre);
-		int len = uidLen(dre);
-		for (int i = 0; i < len; ++i)
-			name += uidName(dre);
+		len = strlen(str);
+		p = new char[len + 1];
+		strcpy(p, str);
 	}
-	void show() const
+	
+	friend std::ostream& operator<<(std::ostream& os, const String& s)
 	{
-		std::cout << std::format("{:8} - {}", num, name) << '\n';
-	}
-	bool operator<(const Dog& other) const
+		return os << s.p; // 정상 작동 한다고 해도 잘못된 코드, string 은 마지막 널을 유지하지 않는다
+	}*/
+
+	String(const char* str) : len{ strlen(str) }
 	{
-		return num < other.num;
+		p = new char[len];
+		memcpy(p, str, len);	// DMA: Direct Memory Access - CPU 접근없이 바로 메모리에 접근
 	}
 
-	int getNum() const
+	friend std::ostream& operator<<(std::ostream& os, const String& s)
 	{
-		return num;
+		for (int i = 0; i < s.len; ++i)
+			os << s.p[i];
+		return os;
 	}
+
 };
-
-// [문제] Dog 객체 100만개를 생성하라.
-// num 기준 오름차순으로 정렬하라
-// 앞에서부터 100개만 출력하라
-
-std::array<Dog, 1'000'000> dogs;
 
 int main()
 {
-	/*std::ranges::sort(dogs, [](Dog a, Dog b) {
-		return a.getNum() < b.getNum();
-		});*/
+	String a{ "123" }; // 개수가 많아져도 32바이트 크기를 유지 -> 동적 할당을 한다.
 
-	/*std::sort(dogs.begin(), dogs.end(), [](Dog a, Dog b) {
-		return a < b;
-		});*/
-
-	std::ranges::sort(dogs, std::less());
-
-	for (const auto& dog : dogs |
-		std::views::take(100))
-		dog.show();
+	std::cout << a << '\n';
 
 	save("main.cpp");
 }
