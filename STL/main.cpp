@@ -131,19 +131,18 @@ size_t String::sid{ 0 };
 
 int main()
 {
-	// [과제] 객체가 3개일 때 메모리에 어떤 일이 일어나는지 확인해보기
-	std::array<String, 5> news{ "안정성", "여부", "검증", "정상작동", "확인" };
-
 	관찰 = true;
+	// [과제] 객체가 3개일 때 메모리에 어떤 일이 일어나는지 확인해보기
+	std::array<String, 3> news{ "안정성", "여부", "검증"};
+
 	// [문제] news를 오름차순 정렬하라
 	std::sort(news.begin(), news.end(), [](const String& a, const String& b) {
 		return a.getString() < b.getString();
 		});
 
-	관찰 = false;
 
 	for (String& s : news)
 		std::cout << s << '\n';
 
-	save("main.cpp");
+	//save("main.cpp");
 }
