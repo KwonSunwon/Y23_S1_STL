@@ -70,6 +70,14 @@ public:
 	// 이동생성자와 이동할당연산자
 	String(String&& other) // && - r-value referens
 	{
+		len = other.len;
+		p = other.p;
+
+		// other를 정리한다. -> dangling ptr 방지
+		other.len = 0;
+		other.p = nullptr;
+
+		print("이동생성자");
 	}
 
 	String operator+(const String& rhs) const
@@ -110,6 +118,7 @@ size_t String::sid{ 0 };
 
 int main()
 {
+	관찰 = true;
 	String a{ "12345" };
 	String b = std::move(a);
 
