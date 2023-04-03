@@ -69,8 +69,8 @@ public:
 
 	void print(const char* msg) const {
 		if (observe) {
-			std::cout << std::format("[{}] - {:<16} length: {:<2d} address: ", id, msg, len);
-			std::cout << static_cast<const void*>(p.get()) << '\n';
+			std::cout << std::format("[{}] - {:<20} length: {:<2d} address: ", id, msg, len);
+			std::cout << static_cast<const void*>(p.get()) << '\n'; // it c++ style cast - c-style cast is (void*)p.get()
 		}
 	}
 };
