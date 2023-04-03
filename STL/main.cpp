@@ -80,6 +80,27 @@ public:
 		print("이동생성자");
 	}
 
+	String& operator=(String&& other)
+	{
+		if (this == &other)
+			return *this;
+
+		// 내가 확보한 자원 해제
+		delete[] p;
+
+		// other 자원을 가져온다
+		len = other.len;
+		p = other.p;
+
+		// other를 초기화한다
+		other.len = 0;
+		other.p = nullptr;
+
+		print("이동할당연산자");
+
+		return *this;
+	}
+
 	String operator+(const String& rhs) const
 	{
 		String temp;
@@ -120,7 +141,8 @@ int main()
 {
 	관찰 = true;
 	String a{ "12345" };
-	String b = std::move(a);
+	String b{ "4567890" };
+	b = std::move(a);
 
 	std::cout << a << '\n';
 	std::cout << b << '\n';
