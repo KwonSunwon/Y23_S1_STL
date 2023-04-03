@@ -9,132 +9,12 @@
 #include <iostream>
 #include <array>
 #include <algorithm>
-#include <string>
 #include "save.h"
-
-bool 관찰{ false };
-
-class String
-{
-	size_t len{};				// 확보한 자원의 바이트 수
-	char* p{};					// 확보한 자원의 주소
-	size_t id = ++sid;			// 객체의 고유번호
-
-	static size_t sid;			// 클래스 스태틱
-
-public:
-	String()
-	{
-		print("디폴트 생성자");
-	}
-	String(const char* str) : len{ strlen(str) }
-	{
-		p = new char[len];
-		memcpy(p, str, len);
-
-		print("생성자(char*)");
-	}
-	~String()
-	{
-		print("소멸자");
-		delete[] p;
-	}
-
-	// 복사생성자와 복사할당연산자
-	String(const String& other) : len{ other.len }
-	{
-		p = new char[len];
-		memcpy(p, other.p, len);
-
-		print("복사생성");
-	}
-	String& operator=(const String& other)
-	{
-		if (this == &other)
-			return *this;
-
-		delete[] p;
-
-		len = other.len;
-		p = new char[len];
-		memcpy(p, other.p, len);
-
-		print("복사할당연산자");
-		return *this;
-	}
-
-	// 이동생성자와 이동할당연산자
-	String(String&& other) // && - r-value referens
-	{
-		len = other.len;
-		p = other.p;
-
-		// other를 정리한다. -> dangling ptr 방지
-		other.len = 0;
-		other.p = nullptr;
-
-		print("이동생성자");
-	}
-
-	String& operator=(String&& other)
-	{
-		if (this == &other)
-			return *this;
-
-		// 내가 확보한 자원 해제
-		delete[] p;
-
-		// other 자원을 가져온다
-		len = other.len;
-		p = other.p;
-
-		// other를 초기화한다
-		other.len = 0;
-		other.p = nullptr;
-
-		print("이동할당연산자");
-
-		return *this;
-	}
-
-	String operator+(const String& rhs) const
-	{
-		String temp;
-		temp.len = len + rhs.len;
-		temp.p = new char[temp.len];
-		memcpy(temp.p, p, len);
-		memcpy(temp.p + len, rhs.p, rhs.len);
-		return temp;
-	}
-
-	friend std::ostream& operator<<(std::ostream& os, const String& s)
-	{
-		for (int i = 0; i < s.len; ++i)
-			os << s.p[i];
-		return os;
-	}
-
-	// gettor / settor
-	std::string getString() const
-	{
-		return std::string(p, len);
-	}
-
-	// 그 외 함수들
-	void print(const char* msg) const
-	{
-		if (관찰)
-		{
-			std::cout << "[" << id << "] - " << msg << ", 개수: " << len
-				<< ", 주소: " << (void*)p << '\n';
-		}
-	}
-};
-
-size_t String::sid{ 0 };
+#include "String.h"
 
 int main()
 {
+	extern bool 관찰;
 	관찰 = true;
 
 	std::array<String, 3> a{ "345", "12", "67890" };
@@ -144,7 +24,7 @@ int main()
 			  });
 
 	for (const String& s : a)
-		std::cout << s << '\n';
+		std::cout << s << std::endl;
 
 	save("main.cpp");
 }
