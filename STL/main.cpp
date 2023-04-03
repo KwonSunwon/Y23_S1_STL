@@ -12,10 +12,6 @@
 #include <string>
 #include "save.h"
 
-// [문제] String을 코딩하라
-// 모든 special 함수의 관찰 메시지를 추가하라
-// 생성시 객체에 고유번호를 부여하라
-
 bool 관찰{ false };
 
 class String
@@ -140,12 +136,15 @@ size_t String::sid{ 0 };
 int main()
 {
 	관찰 = true;
-	String a{ "12345" };
-	String b{ "4567890" };
-	b = std::move(a);
 
-	std::cout << a << '\n';
-	std::cout << b << '\n';
+	std::array<String, 3> a{ "345", "12", "67890" };
+
+	std::sort(a.begin(), a.end(), [](const String& a, const String& b) {
+		return a.getString() < b.getString();
+			  });
+
+	for (const String& s : a)
+		std::cout << s << '\n';
 
 	save("main.cpp");
 }
