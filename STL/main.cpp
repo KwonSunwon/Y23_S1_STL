@@ -18,36 +18,25 @@
 
 bool 관찰{ false };
 
-class String {
-	size_t len{};
-	char* p{};		// [도전] unique_ptr<char> p 로 바꿔서 코딩해 볼 것
+class String
+{
+	size_t len{};				// 확보한 자원의 바이트 수
+	char* p{};					// 확보한 자원의 주소
+	size_t id = ++sid;			// 객체의 고유번호
 
-	size_t id = ++sid; // 객체의 고유번호
-
-	static size_t sid;
+	static size_t sid;			// 클래스 스태틱
 
 public:
-	/*String(const char str[])
-	{
-		len = strlen(str);
-		p = new char[len + 1];
-		strcpy(p, str);
-	}
-
-	friend std::ostream& operator<<(std::ostream& os, const String& s)
-	{
-		return os << s.p; // 정상 작동 한다고 해도 잘못된 코드, string 은 마지막 널을 유지하지 않는다
-	}*/
 	String()
 	{
-		print("디폴트 생성");
+		print("디폴트 생성자");
 	}
 	String(const char* str) : len{ strlen(str) }
 	{
 		p = new char[len];
-		memcpy(p, str, len);	// DMA: Direct Memory Access - CPU 접근없이 바로 메모리에 접근
+		memcpy(p, str, len);
 
-		print("생성(char*)");
+		print("생성자(char*)");
 	}
 	~String()
 	{
@@ -55,14 +44,7 @@ public:
 		delete[] p;
 	}
 
-	// 복사 생성
-	/*String(const String& s) : len{ s.len }
-	{
-		p = new char[len];
-		memcpy(p, s.p, len);
-
-		print("복사생성");
-	}*/
+	// 복사생성자와 복사할당연산자
 	String(const String& other) : len{ other.len }
 	{
 		p = new char[len];
@@ -70,7 +52,6 @@ public:
 
 		print("복사생성");
 	}
-	// 복사생성자를 코딩했다면 복사할당연산자도 반드시 코딩해야함
 	String& operator=(const String& other)
 	{
 		if (this == &other)
@@ -86,18 +67,14 @@ public:
 		return *this;
 	}
 
-	/*String operator+(const String& other) // 함수에 const 붙여줘야 한다.
+	// 이동생성자와 이동할당연산자
+	String(String&& other) // && - r-value referens
 	{
-		String temp;
-		temp.len = this->len + other.len;
-		temp.p = new char[temp.len];
-		memcpy(temp.p, this->p, this->len);
-		memcpy(temp.p + this->len, other.p, other.len);
-		return temp;
-	}*/
+	}
+
 	String operator+(const String& rhs) const
 	{
-		String temp; // 오류가 생긴다면 default 생성자가 없기 때문 String() = default 추가
+		String temp;
 		temp.len = len + rhs.len;
 		temp.p = new char[temp.len];
 		memcpy(temp.p, p, len);
@@ -112,14 +89,17 @@ public:
 		return os;
 	}
 
+	// gettor / settor
 	std::string getString() const
 	{
 		return std::string(p, len);
 	}
 
+	// 그 외 함수들
 	void print(const char* msg) const
 	{
-		if (관찰) {
+		if (관찰)
+		{
 			std::cout << "[" << id << "] - " << msg << ", 개수: " << len
 				<< ", 주소: " << (void*)p << '\n';
 		}
@@ -130,18 +110,11 @@ size_t String::sid{ 0 };
 
 int main()
 {
-	관찰 = true;
-	// [과제] 객체가 3개일 때 메모리에 어떤 일이 일어나는지 확인해보기
-	std::array<String, 3> news{ "안정성", "여부", "검증"};
+	String a{ "12345" };
+	String b = std::move(a);
 
-	// [문제] news를 오름차순 정렬하라
-	std::sort(news.begin(), news.end(), [](const String& a, const String& b) {
-		return a.getString() < b.getString();
-		});
+	std::cout << a << '\n';
+	std::cout << b << '\n';
 
-
-	for (String& s : news)
-		std::cout << s << '\n';
-
-	//save("main.cpp");
+	save("main.cpp");
 }
