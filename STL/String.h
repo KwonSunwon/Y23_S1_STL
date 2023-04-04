@@ -36,9 +36,21 @@ public:
 			os << s.p[i];
 		return os;
 	}
+	
+	// 2023. 4. 4 추가
+	friend std::istream& operator>>(std::istream& is, String& s) {
+		std::string str;
+		is >> str;
+		delete[] s.p;
+		s.len = str.size();
+		s.p = new char[s.len];
+		memcpy(s.p, str.data(), s.len);
+		return is;
+	}
 
 	// gettor / settor
 	std::string getString() const;
+	size_t getLen() const;
 
 	// 그 외 함수들
 	void print(const char* msg) const;

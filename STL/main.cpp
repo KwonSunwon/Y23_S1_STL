@@ -8,15 +8,32 @@
 
 #include <iostream>
 #include <array>
+#include <string>
+#include <fstream>
+#include <algorithm>
 #include "save.h"
 #include "String.h"
 
 int main()
 {
-	std::array<int, 10> a{ 1, 3, 5, 7, 9, 2, 4, 6, 8, 10 };
+	//std::array<std::string, 100> a; // 동일하게 동작해야 한다.
+	std::array<String, 100> a;
 
-	a.back() = 12345;
-	std::cout << a[9] << std::endl;
+	// [문제] a에 "main.cpp" 단어 100개를 읽어와라.
+	std::ifstream in{ "main.cpp" };
+
+	for (int i = 0; i < 100; ++i) {
+		in >> a[i];
+	}
+
+	// 길이 오름차순으로 정렬한 후 출력한다.
+	std::sort(a.begin(), a.end(), [](const String& a, const String& b) {
+		return a.getLen() < b.getLen();
+		});
+
+	for (int i = 0; i < 100; ++i) {
+		std::cout << a[i] << std::endl;
+	}
 
 	save("main.cpp");
 }

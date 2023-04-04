@@ -103,6 +103,11 @@ std::string String::getString() const
 	return std::string(p, len);
 }
 
+size_t String::getLen() const
+{
+	return len;
+}
+
 // 그 외 함수들
 void String::print(const char* msg) const
 {
