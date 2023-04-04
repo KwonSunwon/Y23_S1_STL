@@ -19,6 +19,10 @@ int main()
 
 	// [문제] a의 모든 데이터를 화면에 출력하라
 	std::array<int, 10>::iterator p = a.begin();
+	while(p != a.end()) {
+		std::cout << *p << std::endl; // *p == p.operator*()
+		++p;
+	}
 
 	save("main.cpp");
 }
