@@ -50,7 +50,7 @@ public:
 
 	// gettor / settor
 	std::string getString() const;
-	size_t getLen() const;
+	size_t getSize() const;
 
 	// 그 외 함수들
 	void print(const char* msg) const;

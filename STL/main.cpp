@@ -28,7 +28,7 @@ int main()
 
 	// 길이 오름차순으로 정렬한 후 출력한다.
 	std::sort(a.begin(), a.end(), [](const String& a, const String& b) {
-		return a.getLen() < b.getLen();
+		return a.getSize() < b.getSize();
 		});
 
 	for (int i = 0; i < 100; ++i) {
