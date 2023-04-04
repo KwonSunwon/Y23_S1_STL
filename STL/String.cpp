@@ -106,8 +106,7 @@ std::string String::getString() const
 // 그 외 함수들
 void String::print(const char* msg) const
 {
-	if (관찰)
-	{
+	if (관찰) {
 		std::cout << "[" << id << "] - " << msg << ", 개수: " << len
 			<< ", 주소: " << (void*)p << std::endl;
 	}

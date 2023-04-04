@@ -1,5 +1,5 @@
 //-------------------------------------------------------
-// 2023 1학기 STL 4월 3일 (5주 1)
+// 2023 1학기 STL 4월 4일 (5주 2)
 //-------------------------------------------------------
 // STL 소개
 //-------------------------------------------------------
@@ -14,3 +14,16 @@ int main()
 {
 	save("main.cpp");
 }
+
+// Seqeunce Container 
+// array
+// vector
+// deque
+// forward-list
+// list
+// - 원하는 위치에 바로 Read & Write 
+
+// Associative Container - O(logN)
+// Unordered Associative Container - O(1)
+
+// Iterator
