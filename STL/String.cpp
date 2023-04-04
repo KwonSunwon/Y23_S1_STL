@@ -103,6 +103,7 @@ std::string String::getString() const
 	return std::string(p, len);
 }
 
+// 2023. 4. 4 Ãß°¡
 size_t String::getSize() const
 {
 	return len;
