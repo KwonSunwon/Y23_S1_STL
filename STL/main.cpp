@@ -1,14 +1,17 @@
 //-------------------------------------------------------
 // 2023 1학기 STL 4월 4일 (5주 2)
 //-------------------------------------------------------
-// STL 소개
+// Sequence Container - array
 //-------------------------------------------------------
 // 코딩환경 - VS Release/x64, C++표준 - latest, SDL/아니오
 //-------------------------------------------------------
 
 #include <iostream>
+#include <array>
 #include "save.h"
 #include "String.h"
+
+// Containers are objects that store other objects.
 
 int main()
 {
