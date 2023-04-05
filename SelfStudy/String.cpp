@@ -31,7 +31,7 @@ String::String(const String& other) : len{ other.len }
 	print("copy constructor");
 }
 
-String& String::operator=(const String& other) 
+String& String::operator=(const String& other)
 {
 	if (this == &other)
 		return *this;
@@ -43,6 +43,30 @@ String& String::operator=(const String& other)
 	memcpy(p.get(), other.p.get(), len);
 
 	print("copy assignment");
+	return *this;
+}
+
+String::String(String&& other)
+{
+	len = other.len;
+	p = move(other.p);
+
+	other.len = 0;
+
+	print("move constructor");
+}
+
+String& String::operator=(String&& other)
+{
+	if(this == &other)
+		return *this;
+
+	len = other.len;
+	p = move(other.p);
+
+	other.len = 0;
+	
+	print("move assignment");
 	return *this;
 }
 
