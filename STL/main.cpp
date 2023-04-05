@@ -35,5 +35,5 @@ int main()
 		std::cout << a[i] << std::endl;
 	}
 
-	save("main.cpp");
+	//save("main.cpp");
 }

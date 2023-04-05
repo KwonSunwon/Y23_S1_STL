@@ -8,7 +8,6 @@ bool observe{ false };
 class String {
 	size_t len{};
 	std::unique_ptr<char> p{};
-	char* pp;
 
 	size_t id = ++sid;
 
