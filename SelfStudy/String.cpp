@@ -85,6 +85,11 @@ std::string String::getString() const
 	return std::string(p.get(), len);
 }
 
+size_t String::getSize() const
+{
+	return len;
+}
+
 void String::print(const char* msg) const 
 {
 	if (observe) {
