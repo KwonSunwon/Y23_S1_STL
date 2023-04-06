@@ -12,7 +12,7 @@ String::String()
 
 String::String(const char* s) : len{ strlen(s) } 
 {
-	p = std::make_unique<char>(len);
+	p = std::make_unique<char[]>(len);
 	memcpy(p.get(), s, len);
 
 	print("constructor(char*)");
@@ -25,7 +25,7 @@ String::~String()
 
 String::String(const String& other) : len{ other.len }
 {
-	p = std::make_unique<char>(len);
+	p = std::make_unique<char[]>(len);
 	memcpy(p.get(), other.p.get(), len);
 
 	print("copy constructor");
@@ -39,7 +39,7 @@ String& String::operator=(const String& other)
 	p.reset();
 
 	len = other.len;
-	p = std::make_unique<char>(len);
+	p = std::make_unique<char[]>(len);
 	memcpy(p.get(), other.p.get(), len);
 
 	print("copy assignment");
@@ -74,7 +74,7 @@ String String::operator+(const String& rhs) const
 {
 	String temp;
 	temp.len = len + rhs.len;
-	temp.p = std::make_unique<char>(temp.len);
+	temp.p = std::make_unique<char[]>(temp.len);
 	memcpy(temp.p.get(), p.get(), len);
 	memcpy(temp.p.get() + len, rhs.p.get(), rhs.len);
 	return temp;
