@@ -3,6 +3,8 @@
 class String {
 	size_t len{};
 	std::unique_ptr<char[]> p{};
+	// std::unique_ptr<char> 를 하게 되면 스마트 포인터가 하나의 char에 대한 메모리를 관리하게 된다.
+	// 때문에 문자열 전체를 스마트 포인터가 관리하게 하기 위해서는 unique_ptr<char[]>를 사용해야 한다.
 
 	size_t id = ++sid;
 
