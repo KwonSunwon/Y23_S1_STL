@@ -9,30 +9,29 @@
 
 #include <iostream>
 #include <vector>
-#include <thread>
+#include <string>
+#include <algorithm>
 #include "save.h"
 #include "String.h"
 
 using namespace std;
 
+// [문제] 키보드에서 단어를 읽어와라
+// 오름차순 정렬하라
+// 화면에 출력하라
+
 int main()
 {
-	// 벡터가 메모리를 늘려가는 모습을 관찰한다.
-	std::vector<int> v;
+	vector<string> v;
 
-	size_t old = v.capacity();
-	while (true) {
-		v.push_back(1);
+	string s;
+	while (cin >> s)
+		v.push_back(s);
 
-		if (old != v.capacity()) { // 용량이 변화할 때
-			std::cout << "원소 수 - " << v.size() << std::endl;
-			std::cout << "용량	 - " << v.capacity() << std::endl;
-			std::cout << std::endl;
-			old = v.capacity();
-			// 1초 쉰다.
-			std::this_thread::sleep_for(1s);
-		}
-	}
+	sort(v.begin(), v.end());
 
-	//save("main.cpp");
+	for (auto& s : v)
+		cout << s << endl;
+
+	save("main.cpp");
 }
