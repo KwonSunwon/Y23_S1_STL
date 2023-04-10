@@ -9,22 +9,30 @@
 
 #include <iostream>
 #include <vector>
+#include <thread>
 #include "save.h"
 #include "String.h"
 
+using namespace std;
+
 int main()
 {
-	std::vector<int> v{ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+	// 벡터가 메모리를 늘려가는 모습을 관찰한다.
+	std::vector<int> v;
 
-	std::cout << sizeof(v) << std::endl;
-	std::cout << v.size() << std::endl;		// 1 멤버
-	std::cout << v.data() << std::endl;		// 2 멤버
-	std::cout << v.capacity() << std::endl; // 3 멤버
+	size_t old = v.capacity();
+	while (true) {
+		v.push_back(1);
 
-	v.push_back(11);
-	std::cout << v.size() << std::endl;
-	std::cout << v.data() << std::endl;
-	std::cout << v.capacity() << std::endl;
+		if (old != v.capacity()) { // 용량이 변화할 때
+			std::cout << "원소 수 - " << v.size() << std::endl;
+			std::cout << "용량	 - " << v.capacity() << std::endl;
+			std::cout << std::endl;
+			old = v.capacity();
+			// 1초 쉰다.
+			std::this_thread::sleep_for(1s);
+		}
+	}
 
-	save("main.cpp");
+	//save("main.cpp");
 }
