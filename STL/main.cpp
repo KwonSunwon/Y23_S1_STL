@@ -26,7 +26,7 @@ int main()
 
 	string s;
 	while (cin >> s)
-		v.push_back(s);
+		v.push_back(s); // ctrl + z Å»Ãâ
 
 	sort(v.begin(), v.end());
 
