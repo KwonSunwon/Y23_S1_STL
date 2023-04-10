@@ -2,23 +2,17 @@
 // 2023 1학기 STL 4월 10일 (6주 1)
 // 4월 25일 - (8주 2) 중간시험
 //-------------------------------------------------------
-// Sequence Container - array
+// Sequence Container - vector
 //-------------------------------------------------------
 // 코딩환경 - VS Release/x64, C++표준 - latest, SDL/아니오
 //-------------------------------------------------------
 
 #include <iostream>
-#include <array>
 #include "save.h"
 #include "String.h"
 
 int main()
 {
-	std::array<int, 10> a{ 1,2,3,4,5,6,7,8,9,10 };
 
-	std::cout << a[9] << std::endl;
-
-	std::cout << a.at(10) << std::endl; // at 함수는 범위를 벗어나면 예외를 발생시킨다.
-
-	//save("main.cpp");
+	save("main.cpp");
 }
