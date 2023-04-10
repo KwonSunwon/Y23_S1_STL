@@ -14,16 +14,17 @@
 
 int main()
 {
-	std::vector<int> v{ 12345678, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+	std::vector<int> v{ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 
 	std::cout << sizeof(v) << std::endl;
+	std::cout << v.size() << std::endl;		// 1 ¸â¹ö
+	std::cout << v.data() << std::endl;		// 2 ¸â¹ö
+	std::cout << v.capacity() << std::endl; // 3 ¸â¹ö
+
+	v.push_back(11);
 	std::cout << v.size() << std::endl;
 	std::cout << v.data() << std::endl;
+	std::cout << v.capacity() << std::endl;
 
-	int* p = v.data();
-	std::cout << *p << std::endl;
-
-	std::cout << v.max_size() << std::endl;
-
-	//save("main.cpp");
+	save("main.cpp");
 }
