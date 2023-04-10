@@ -10,28 +10,27 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include <algorithm>
+#include <numeric>
 #include "save.h"
 #include "String.h"
 
 using namespace std;
 
-// [문제] 키보드에서 단어를 읽어와라
-// 오름차순 정렬하라
-// 화면에 출력하라
+// [문제] 키보드에서 int를 읽어라.
+// 입력이 끝나면 합계와 평균을 출력하라.
 
 int main()
 {
-	vector<string> v;
+	vector<int> v;
 
-	string s;
-	while (cin >> s)
-		v.push_back(s); // ctrl + z 탈출
+	int n;
+	while (cin >> n)
+		v.push_back(n);
 
-	sort(v.begin(), v.end());
+	int sum = accumulate(v.begin(), v.end(), 0);
 
-	for (auto& s : v)
-		cout << s << endl;
+	cout << "합계: " << sum << endl;
+	cout << "평균: " << static_cast<double>(sum) / v.size() << endl;
 
-	save("main.cpp");
+	//save("main.cpp");
 }
