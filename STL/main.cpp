@@ -1,5 +1,6 @@
 //-------------------------------------------------------
-// 2023 1학기 STL 4월 4일 (5주 2)
+// 2023 1학기 STL 4월 10일 (6주 1)
+// 4월 25일 - (8주 2) 중간시험
 //-------------------------------------------------------
 // Sequence Container - array
 //-------------------------------------------------------
@@ -8,32 +9,16 @@
 
 #include <iostream>
 #include <array>
-#include <string>
-#include <fstream>
-#include <algorithm>
 #include "save.h"
 #include "String.h"
 
 int main()
 {
-	//std::array<std::string, 100> a; // 동일하게 동작해야 한다.
-	std::array<String, 100> a;
+	std::array<int, 10> a{ 1,2,3,4,5,6,7,8,9,10 };
 
-	// [문제] a에 "main.cpp" 단어 100개를 읽어와라.
-	std::ifstream in{ "main.cpp" };
+	std::cout << a[9] << std::endl;
 
-	for (int i = 0; i < 100; ++i) {
-		in >> a[i];
-	}
-
-	// 길이 오름차순으로 정렬한 후 출력한다.
-	std::sort(a.begin(), a.end(), [](const String& a, const String& b) {
-		return a.getSize() < b.getSize();
-		});
-
-	for (int i = 0; i < 100; ++i) {
-		std::cout << a[i] << std::endl;
-	}
+	std::cout << a.at(10) << std::endl; // at 함수는 범위를 벗어나면 예외를 발생시킨다.
 
 	//save("main.cpp");
 }
