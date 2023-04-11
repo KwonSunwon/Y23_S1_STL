@@ -11,26 +11,35 @@
 
 #include <iostream>
 #include <vector>
-#include <algorithm>
+#include <array>
+#include <fstream>
 #include "save.h"
 #include "String.h"
 
 using namespace std;
 
+// [문제] "main.cpp"를 읽어 알파뱃만 vector에 저장하라.
+// 대소문자 구분하지 말고 다음과 같은 형식으로 문자의 빈도를 출력하라
+//
+// a - 10
+// b - 12
+// ...
+// z - 0
+
 int main()
 {
-	extern bool 관찰;
-	관찰 = true;
+	ifstream in{ "main.cpp" };
 
- 	vector<String> v;
-	v.reserve(3);
-	v.emplace_back("123"); // emplace의 인자는 "생성자의 인자"만 전달해야 된다.
-	// 만약 v.emplae_back(String("123")) 으로 하면 임시객체가 생성될 것이다.
+	array<int, 26> alpha{0};
+	char ch;
+	while (in >> ch) {
+		if (isalpha(ch))
+			++alpha[tolower(ch) - 'a'];
+	}
 
-	v.emplace_back(); // default 생성자가 호출될 것
-	// v.push_back(); // error, push_back은 객체를 받는 것이기 때문에
+	for (int i = 0; i < alpha.size(); ++i) {
+		cout << char('a' + i) << " - " << alpha[i] << endl;
+	}
 
-	관찰 = false;
-
-	//save("main.cpp");
+	save("main.cpp");
 }
