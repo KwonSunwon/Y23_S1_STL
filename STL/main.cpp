@@ -24,9 +24,13 @@ int main()
 
  	vector<String> v;
 	v.reserve(3);
-	v.emplace_back("123");
+	v.emplace_back("123"); // emplace의 인자는 "생성자의 인자"만 전달해야 된다.
+	// 만약 v.emplae_back(String("123")) 으로 하면 임시객체가 생성될 것이다.
+
+	v.emplace_back(); // default 생성자가 호출될 것
+	// v.push_back(); // error, push_back은 객체를 받는 것이기 때문에
 
 	관찰 = false;
 
-	save("main.cpp");
+	//save("main.cpp");
 }
