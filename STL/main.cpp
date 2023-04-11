@@ -21,9 +21,11 @@ int main()
 	°üÂû = true;
 
  	vector<String> v;
+	v.reserve(10);
 
 	v.push_back("123");
 	v.push_back("12345");
+	v.push_back("34567");
 
 	°üÂû = false;
 
