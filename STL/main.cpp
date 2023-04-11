@@ -1,5 +1,5 @@
 //-------------------------------------------------------
-// 2023 1학기 STL 4월 10일 (6주 1)
+// 2023 1학기 STL 4월 11일 (6주 2)
 // 4월 25일 - (8주 2) 중간시험
 //-------------------------------------------------------
 // Sequence Container - vector - dynamic array
@@ -9,28 +9,24 @@
 
 #include <iostream>
 #include <vector>
-#include <string>
-#include <numeric>
+#include <algorithm>
 #include "save.h"
 #include "String.h"
 
 using namespace std;
 
-// [문제] 키보드에서 int를 읽어라.
-// 입력이 끝나면 합계와 평균을 출력하라.
-
 int main()
 {
-	vector<int> v;
+	vector<String> v{ "333", "1", "22", "55555", "4444" };
 
-	int n;
-	while (cin >> n)
-		v.push_back(n);
+	// [문제] v를 길이 오름차순으로 정렬하라
 
-	int sum = accumulate(v.begin(), v.end(), 0);
+	sort(v.begin(), v.end(), [](const String& a, const String& b) {
+		return a.getSize() < b.getSize();
+		});
 
-	cout << "합계: " << sum << endl;
-	cout << "평균: " << static_cast<double>(sum) / v.size() << endl;
+	for (const String& s : v)
+		cout << s << endl;
 
-	//save("main.cpp");
+	save("main.cpp");
 }
