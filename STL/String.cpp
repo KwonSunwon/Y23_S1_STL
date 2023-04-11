@@ -53,7 +53,8 @@ String& String::operator=(const String& other)
 }
 
 // 이동생성자와 이동할당연산자
-String::String(String&& other) // && - r-value referens
+// 2023. 4. 11. noexcept 추가
+String::String(String&& other) noexcept // && - r-value referens
 {
 	len = other.len;
 	p = other.p;
@@ -65,7 +66,7 @@ String::String(String&& other) // && - r-value referens
 	print("이동생성자");
 }
 
-String& String::operator=(String&& other)
+String& String::operator=(String&& other) noexcept
 {
 	if (this == &other)
 		return *this;

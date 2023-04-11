@@ -17,16 +17,15 @@ using namespace std;
 
 int main()
 {
-	vector<String> v{ "333", "1", "22", "55555", "4444" };
+	extern bool 관찰;
+	관찰 = true;
 
-	// [문제] v를 길이 오름차순으로 정렬하라
+ 	vector<String> v;
 
-	sort(v.begin(), v.end(), [](const String& a, const String& b) {
-		return a.getSize() < b.getSize();
-		});
+	v.push_back("123");
+	v.push_back("12345");
 
-	for (const String& s : v)
-		cout << s << endl;
+	관찰 = false;
 
 	save("main.cpp");
 }

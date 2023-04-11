@@ -25,8 +25,9 @@ public:
 	String& operator=(const String& other);
 
 	// 이동생성자와 이동할당연산자
-	String(String&& other);
-	String& operator=(String&& other);
+	// 2023. 4. 11. noexcept 추가
+	String(String&& other) noexcept; // noexcept: 예외가 발생하지 않는다는 것을 컴파일러에게 알려주는 키워드
+	String& operator=(String&& other) noexcept;
 
 	// 연산자 오버로딩 함수들
 	String operator+(const String& rhs) const;
