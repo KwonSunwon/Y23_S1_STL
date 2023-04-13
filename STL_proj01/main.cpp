@@ -75,7 +75,7 @@ int main()
 		//<< sortedByScorePlayers[DATA_COUNT - 1] << endl
 		//<< "Player Socore 평균: " << static_cast<double>(sum) / DATA_COUNT << endl << endl;
 
-	auto iter = lower_bound(sortedByIDPlayersPtr.begin(), sortedByIDPlayersPtr.end(), 3, [](const Player* p, int id) {
+	auto iter = lower_bound(sortedByIDPlayersPtr.begin(), sortedByIDPlayersPtr.end(), 4, [](const Player* p, int id) {
 		return p->getId() < id;
 		});
 
@@ -84,13 +84,32 @@ int main()
 	cout << **iter << endl;
 	cout << endl;
 
-	if (iter != sortedByIDPlayersPtr.end() && (*iter)->getId() == 3) {
-		cout << "ID가 1000000인 Player: " << **iter << endl;
+	if (iter != sortedByIDPlayersPtr.end() && (*iter)->getId() == 4) {
+		cout << "ID가 4인 Player: " << **iter << endl;
 	}
 	else {
-		cout << "ID가 1000000인 Player가 없습니다." << endl;
+		cout << "ID가 4인 Player가 없습니다." << endl;
 	}
+	cout << endl;
 
+	auto iterName = find_if(sortedByNamePlayersPtr.begin(), sortedByNamePlayersPtr.end(), [](const Player* p, const Player* ptr) {
+		return p == ptr;
+		});
+	// 흠...
+	// 생각해보니까 주소값을 가지고 찾는다고 해도 주소 값이 정렬된게 아니니까 결국 선형 탐색을 해야하는데
+	// 그렇다면 주소값을 이용해서 찾는것보다 ID 정렬 배열에서 찾아낸 객체를 이용해서 객체 내용을 확인하고
+	// 그걸 이용해서 각각 이진 탐색을 하는게 더 빠를거 같음
+
+	// + 5번 과제 궁금증 추가
+	// 만약에 같은 id를 객체가 두 개 이상 존재할 때
+	// 해당 객체의 이름 정렬에서도 id에 해당하는 모든 객체에 대해서 해당 일을 해야 하는건가?
+
+	if (iterName != sortedByNamePlayersPtr.end() && *iterName == *iter) {
+		cout << "ID가 4인 Player: " << **iterName << endl;
+	}
+	else {
+		cout << "ID가 4인 Player가 없습니다." << endl;
+	}
 }
 
 // 복사 생각해보니까 깊은 복사를 하는게 아니라
