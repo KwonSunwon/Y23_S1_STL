@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <numeric>
 #include <chrono>
+#include <map>
 #include "Player.h"
 
 #define DATA_COUNT 2'000'000
@@ -73,6 +74,22 @@ int main()
 	//std::cout << "2. Score가 가장 큰 Player" << endl
 		//<< sortedByScorePlayers[DATA_COUNT - 1] << endl
 		//<< "Player Socore 평균: " << static_cast<double>(sum) / DATA_COUNT << endl << endl;
+
+	auto iter = lower_bound(sortedByIDPlayersPtr.begin(), sortedByIDPlayersPtr.end(), 3, [](const Player* p, int id) {
+		return p->getId() < id;
+		});
+
+	cout << endl;
+	cout << *iter << endl;
+	cout << **iter << endl;
+	cout << endl;
+
+	if (iter != sortedByIDPlayersPtr.end() && (*iter)->getId() == 3) {
+		cout << "ID가 1000000인 Player: " << **iter << endl;
+	}
+	else {
+		cout << "ID가 1000000인 Player가 없습니다." << endl;
+	}
 
 }
 
