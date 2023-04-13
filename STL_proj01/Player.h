@@ -15,8 +15,8 @@ public:
 	Player(Player& other);
 	Player& operator=(Player& other);
 
-	Player(Player&& other);
-	Player& operator=(Player&& other);
+	Player(Player&& other) noexcept;
+	Player& operator=(Player&& other) noexcept;
 
 	friend std::ostream& operator<<(std::ostream& os, const Player& p);
 

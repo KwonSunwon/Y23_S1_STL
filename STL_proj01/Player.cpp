@@ -44,7 +44,7 @@ Player& Player::operator=(Player& other)
 	return *this;
 }
 
-Player::Player(Player&& other)
+Player::Player(Player&& other) noexcept
 {
 	name = other.name;
 	score = other.score;
@@ -59,7 +59,7 @@ Player::Player(Player&& other)
 	other.p = nullptr;
 }
 
-Player& Player::operator=(Player&& other)
+Player& Player::operator=(Player&& other) noexcept
 {
 	if (this == &other)
 		return *this;
