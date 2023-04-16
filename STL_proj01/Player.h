@@ -10,6 +10,7 @@ private:
 
 public:
 	Player();
+	Player(std::string, int, size_t, size_t, char*);
 	~Player();
 
 	Player(Player& other);
@@ -32,4 +33,7 @@ public:
 	size_t getId() const { return id; }
 	size_t getNum() const { return num; }
 	char* getP() const { return p; }
+
+	void sortP();
+	bool isOver10A();
 };
