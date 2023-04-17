@@ -26,8 +26,7 @@ int main()
 
 	// "2"客 "4" 荤捞俊 "3"阑 尝况 持绢扼
 	包蔓 = true;
-	v.insert(v.begin() + 2, "3");
-	//v.insert(find(v.begin(), v.end(), "4"), "3");
+	v.emplace(v.begin() + 2, "3");
 	包蔓 = false;
 
 	for (const String& s: v)
