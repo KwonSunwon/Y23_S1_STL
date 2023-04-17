@@ -22,14 +22,16 @@ extern bool 관찰;
 int main()
 {
 	//관찰 = true;
-	vector<String> v{ "1", "2", "3", "4", "5" };
+	vector<String> v{ "1", "2", "4", "5" };
 
-	// v에서 "3"을 제거하라
-	//v.erase(remove(v.begin(), v.end(), 3), v.end());
-	erase(v, "3");
+	// "2"와 "4" 사이에 "3"을 끼워 넣어라
+	관찰 = true;
+	v.insert(v.begin() + 2, "3");
+	//v.insert(find(v.begin(), v.end(), "4"), "3");
+	관찰 = false;
 
-	for (int i = 0; i < v.size(); ++i)
-		cout << v[i] << ' ';
+	for (const String& s: v)
+		cout << s << ' ';
 	cout << endl;
 
 	//save("main.cpp");
