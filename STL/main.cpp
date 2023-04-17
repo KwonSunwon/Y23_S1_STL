@@ -11,6 +11,7 @@
 
 #include <iostream>
 #include <vector>
+#include <numeric>
 #include "save.h"
 #include "String.h"
 
@@ -18,20 +19,21 @@ using namespace std;
 
 int main()
 {
-	vector<int> v{ 1,2,3,4,5 };
+	vector<int> v(100);
+	iota(v.begin(), v.end(), 1);
+
+	// [문제] v에서 홀수를 제거하라
+	// remvoe_if 로 가능하다
+	// 조건을 판단하는 callable = predicate
+
+	v.erase(remove_if(v.begin(), v.end(), [](int val) { // 여기에는 const int& 가 필요없어...
+		return val & 1; // val % 2 나머지 연산은 굉장히 비싼 연산, val & 1 비트연산 - 제일 오른쪽 비트가 1이면 홀수
+		}), v.end());
+
+	erase_if(v, [](int val) {
+		return val & 1;
+		});
 	
-	// [문제] v에서 3을 제거하라.
-	// 알고리즘 함수 remove를 사용하면 된다.
-
-	auto iter = remove(v.begin(), v.end(), 3); // 이런 경우에는 auto를 사용한다.
-	v.erase(iter, v.end());
-
-	v.erase(remove(v.begin(), v.end(), 3), v.end()); // 그리고 보통은 이렇게 한다.
-	// -> erase-remove idiom
-	// 근데 매번 이렇게 쓰기 귀찮으니까 C++20 부터는...
-	erase(v, 3); // 새로운 전역함수가 제공된다
-	// 그런데 이거 벡터에서만 돌아감, 그리고 진짜 전역변수가 아닌 syntactic sugar이다.
-
 	for (int i = 0; i < v.size(); ++i)
 		cout << v[i] << ' ';
 	cout << endl;
