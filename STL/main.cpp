@@ -17,26 +17,20 @@
 
 using namespace std;
 
+extern bool 관찰;
+
 int main()
 {
-	vector<int> v(100);
-	iota(v.begin(), v.end(), 1);
+	//관찰 = true;
+	vector<String> v{ "1", "2", "3", "4", "5" };
 
-	// [문제] v에서 홀수를 제거하라
-	// remvoe_if 로 가능하다
-	// 조건을 판단하는 callable = predicate
+	// v에서 "3"을 제거하라
+	//v.erase(remove(v.begin(), v.end(), 3), v.end());
+	erase(v, "3");
 
-	v.erase(remove_if(v.begin(), v.end(), [](int val) { // 여기에는 const int& 가 필요없어...
-		return val & 1; // val % 2 나머지 연산은 굉장히 비싼 연산, val & 1 비트연산 - 제일 오른쪽 비트가 1이면 홀수
-		}), v.end());
-
-	erase_if(v, [](int val) {
-		return val & 1;
-		});
-	
 	for (int i = 0; i < v.size(); ++i)
 		cout << v[i] << ' ';
 	cout << endl;
 
-	save("main.cpp");
+	//save("main.cpp");
 }

@@ -5,6 +5,7 @@
 
 #include <string>
 #include <iostream>
+#include <algorithm>
 #include "String.h"
 
 bool 관찰{ false };				// 관찰하고 싶으면 true로 변경
@@ -96,6 +97,15 @@ String String::operator+(const String& rhs) const
 	memcpy(temp.p, p, len);
 	memcpy(temp.p + len, rhs.p, rhs.len);
 	return temp;
+}
+
+// 2023. 4. 17. 추가
+bool String::operator==(const String& rhs) const
+{
+	//if (len != rhs.len)
+	//	return false;
+
+	return std::equal(p, p + len, rhs.p, rhs.p + rhs.len);
 }
 
 // gettor / settor

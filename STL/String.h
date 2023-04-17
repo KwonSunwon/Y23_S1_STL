@@ -32,6 +32,9 @@ public:
 	// 연산자 오버로딩 함수들
 	String operator+(const String& rhs) const;
 
+	// 2023. 4. 17 추가
+	bool operator==(const String& rhs) const;
+
 	friend std::ostream& operator<<(std::ostream& os, const String& s) {
 		for (int i = 0; i < s.len; ++i)
 			os << s.p[i];
