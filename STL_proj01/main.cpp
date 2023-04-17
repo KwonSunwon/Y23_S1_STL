@@ -71,6 +71,8 @@ int main()
 	//end = chrono::high_resolution_clock::now();
 	//cout << "포인팅 시간: " << chrono::duration_cast<chrono::milliseconds>(end - start).count() << "ms" << endl;
 
+	// 정렬도 생각보다 여전히 시간이 걸림
+	// 시간을 더 줄일 수 있는 방법?
 	sort_players();
 
 	/*cout << "ID 정렬" << endl;
@@ -138,6 +140,7 @@ int main()
 	// 1149459
 	cout << "3. ID가 서로 같은 객체의 개수: " << sameIdCnt << endl << endl;
 
+	// 이 부분 시간 줄일 수 있는 방법 없을까?
 	for (Player& p : players) {
 		p.sortP();
 		over10A += p.isOver10A();

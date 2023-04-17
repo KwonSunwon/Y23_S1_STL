@@ -1,5 +1,5 @@
 //-------------------------------------------------------
-// 2023 1학기 STL 4월 11일 (6주 2)
+// 2023 1학기 STL 4월 17일 (7주 1)
 // 4월 25일 - (8주 2) 중간시험
 //-------------------------------------------------------
 // Sequence Container - vector - dynamic array
@@ -11,35 +11,24 @@
 
 #include <iostream>
 #include <vector>
-#include <array>
-#include <fstream>
 #include "save.h"
 #include "String.h"
 
 using namespace std;
 
-// [문제] "main.cpp"를 읽어 알파뱃만 vector에 저장하라.
-// 대소문자 구분하지 말고 다음과 같은 형식으로 문자의 빈도를 출력하라
-//
-// a - 10
-// b - 12
-// ...
-// z - 0
-
 int main()
 {
-	ifstream in{ "main.cpp" };
+	vector<int> v{ 1,2,3,4,5 };
 
-	array<int, 26> alpha{0};
-	char ch;
-	while (in >> ch) {
-		if (isalpha(ch))
-			++alpha[tolower(ch) - 'a'];
-	}
+	// [문제] v에서 3을 제거하라.
+	// 알고리즘 함수 remove를 사용하면 된다.
 
-	for (int i = 0; i < alpha.size(); ++i) {
-		cout << char('a' + i) << " - " << alpha[i] << endl;
-	}
+	vector<int>::iterator iter = remove(v.begin(), v.end(), 3);
+	v.erase(iter, v.end());
+
+	for (int i = 0; i < v.size(); ++i)
+		cout << v[i] << ' ';
+	cout << endl;
 
 	save("main.cpp");
 }
