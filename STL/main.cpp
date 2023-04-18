@@ -10,6 +10,7 @@
 #include <iostream>
 #include <deque>
 #include <vector>
+#include <list>
 #include "save.h"
 #include "String.h"
 
@@ -17,22 +18,28 @@ using namespace std;
 
 extern bool 관찰;
 
+// [문제] 어떤 컨테이너가 int를 가장 많이 담을 수 있나?
+// vector, deque, list
+// x86 환경에서 비교
+// 서로 다른 컨테이너를 가지고 같은 작업을 수행해 보는 것을 벤치마크라고 한다
+
+// vector - 136,216,567
+// deque  - 268,435,452
+// list	  - 84,053,312
+
 int main()
 {
-	// 덱의 메모리는 contiguous?
-	deque<int> d{ 1,2,3,4,5,6,7,8,9,10 };
+	list<int> v;
 
-	for (int i = 0; i < d.size(); ++i)
-			cout << addressof(d[i]) << endl;
-	// 메모리 주소가 4개씩 연속되어 있다(int인 경우)
-	// - 경우에 따라 다르게 표현될 수 있다
+	try {
+		while (true) {
+			v.emplace_back(1);
+		}
+	}
+	catch(exception& e) {
+		cout << "메모리 고갈 - " << e.what() << endl;
+		cout << "확보한 int 수 - " << v.size() << endl;
+	}
 
-	d.emplace_front(0);
-	d.emplace_back(11);
-	cout << endl;
-	for (int i = 0; i < d.size(); ++i)
-		cout << addressof(d[i]) << endl;
-	// deque은 메모리를 블럭 단위로 관리한다
-
-	save("main.cpp");
+	//save("main.cpp");
 }
