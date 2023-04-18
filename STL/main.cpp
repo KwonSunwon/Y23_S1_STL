@@ -19,16 +19,15 @@ extern bool 관찰;
 
 int main()
 {
-	deque<String> d{ "1", "2", "3" };
+	// 벡터의 메모리는 contiguous?
+	vector<int> v{ 1,2,3,4,5,6,7,8,9,10 };
 
-	관찰 = true;
-	// v앞에 0을 추가하시오
-	d.emplace(d.begin(), "0");
-	관찰 = false;
+	// v의 메모리가 연속되어 있는지 확인하시오
+	if(v.data() == &v[0])
+		cout << "두 주소는 같다" << endl;
 
-	for (const String& s : d)
-		cout << s << " ";
-	cout << endl;
-
-	save("main.cpp");
+	for (int i = 0; i < v.size(); ++i)
+			cout << addressof(v[i]) << endl;
+	
+	//save("main.cpp");
 }
