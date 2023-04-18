@@ -18,22 +18,32 @@ using namespace std;
 
 extern bool 관찰;
 
-// [문제] 어떤 컨테이너가 int를 가장 많이 담을 수 있나?
+class Test {
+	char x[1024];
+};
+
+// [문제] 어떤 컨테이너가 Test객체(1024byte)를 가장 많이 담을 수 있나?
 // vector, deque, list
 // x86 환경에서 비교
 // 서로 다른 컨테이너를 가지고 같은 작업을 수행해 보는 것을 벤치마크라고 한다
 
+// int
 // vector - 136,216,567
 // deque  - 268,435,452
-// list	  - 84,053,312
+// list	  -  84,053,312
+
+// Test(1024byte)
+// vector -   699,913
+// deque  - 1,982,426
+// list   - 1,876,889
 
 int main()
 {
-	list<int> v;
+	list<Test> v;
 
 	try {
 		while (true) {
-			v.emplace_back(1);
+			v.emplace_back();
 		}
 	}
 	catch(exception& e) {
@@ -41,5 +51,5 @@ int main()
 		cout << "확보한 int 수 - " << v.size() << endl;
 	}
 
-	//save("main.cpp");
+	save("main.cpp");
 }
