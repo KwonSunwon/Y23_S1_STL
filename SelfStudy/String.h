@@ -11,16 +11,18 @@ class String {
 	static size_t sid;
 
 public:
+	// special member function
 	String();
 	String(const char* s);
 	~String();
 	String(const String& other);
-
 	String& operator=(const String& other);
-	String operator+(const String& rhs) const;
+	String(String&& other) noexcept;
+	String& operator=(String&& other) noexcept;
 
-	String(String&& other);
-	String& operator=(String&& other);
+	// operator overoading
+	String operator+(const String& rhs) const;
+	bool operator==(const String& rhs) const;
 
 	friend std::ostream& operator<<(std::ostream& os, const String& s) {
 		for(int i = 0; i < s.len; ++i)
@@ -41,6 +43,7 @@ public:
 		return is;
 	}
 
+	// getter/setter
 	std::string getString() const;
 	size_t getSize() const;
 

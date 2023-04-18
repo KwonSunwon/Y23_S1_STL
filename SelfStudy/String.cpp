@@ -1,6 +1,7 @@
 #include <string>
 #include <iostream>
 #include <format>
+#include <algorithm>
 #include "String.h"
 
 bool observe{ false };
@@ -46,7 +47,7 @@ String& String::operator=(const String& other)
 	return *this;
 }
 
-String::String(String&& other)
+String::String(String&& other) noexcept
 {
 	len = other.len;
 	p = move(other.p);
@@ -56,7 +57,7 @@ String::String(String&& other)
 	print("move constructor");
 }
 
-String& String::operator=(String&& other)
+String& String::operator=(String&& other) noexcept
 {
 	if(this == &other)
 		return *this;
@@ -80,7 +81,12 @@ String String::operator+(const String& rhs) const
 	return temp;
 }
 
-std::string String::getString() const 
+bool String::operator==(const String& rhs) const
+{
+	return std::equal(p.get(), p.get() + len, rhs.p.get(), rhs.p.get() + rhs.len);
+}
+
+std::string String::getString() const		
 {
 	return std::string(p.get(), len);
 }

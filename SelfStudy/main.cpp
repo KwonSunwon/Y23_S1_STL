@@ -1,31 +1,17 @@
 #include <iostream>
-#include <array>
 #include <algorithm>
-#include <format>
-#include <fstream>
-#include <string>
+#include <list>
 #include "String.h"
+
+using namespace std;
 
 int main()
 {
-	//std::array<std::string, 100> a; // 동일하게 동작해야 한다.
-	std::array<String, 100> a;
+	list<String> strlist{ "123", "234", "456" };
 
-	// [문제] a에 "main.cpp" 단어 100개를 읽어와라.
-	std::ifstream in{ "main.cpp" };
-
-	for (int i = 0; i < 100; ++i) {
-		in >> a[i];
-		std::cout << i << ": " << a[i] << std::endl;
-	}
-
-	// 길이 오름차순으로 정렬한 후 출력한다.
-	std::sort(a.begin(), a.end(), [](const String& a, const String& b) {
-		return a.getSize() < b.getSize();
-		});
-
-	for (int i = 0; i < 100; ++i) {
-		std::cout << a[i] << std::endl;
-	}
-
+	auto iter = find(strlist.begin(), strlist.end(), "234");
+	if (iter != strlist.end())
+		cout << "찾았다" << endl;
+	else
+		cout << "못찾았다" << endl;
 }
