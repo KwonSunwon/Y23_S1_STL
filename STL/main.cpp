@@ -10,6 +10,7 @@
 #include <iostream>
 #include <list>
 #include <fstream>
+#include <algorithm>
 #include "save.h"
 #include "String.h"
 
@@ -20,30 +21,27 @@ extern bool 관찰;
 int main()
 {
 	ifstream in{ "리스트.txt" };
-	if (!in) {
-		cout << "file open error" << endl;
-		return 0;
-	}
-
 	list<String> strList{ istream_iterator<String>{in}, {} };
 
-	cout << strList.size() << endl;
+	// [문제] 리스트를 오름차순으로 정렬하시오.
 
-	// [문제] 입력한 단어가 있는 지, 있다면 몇 번째 단어인지 출력하라.
-	while (true) {
-		cout << "찾을 단어를 입력하시오: ";
-		String s;
-		cin >> s;
+	/*sort(strList.begin(), strList.end(), [](const String& a, const String& b) {
+		return a.getString() < b.getString();
+		});*/
+	
+	strList.sort([](const String& a, const String& b){
+		return a.getString() < b.getString();
+		});
 
-		// 찾아서 출력
-		auto iter = find(strList.begin(), strList.end(), s);
-		if (iter == strList.end()) {
-			cout << s << "는 없습니다." << endl;
-			continue;
-		}
-		
-		cout << s << "를 찾았습니다 - " << distance(strList.begin(), iter) + 1 << endl;
-	}
+	strList.unique();
 
-	save("main.cpp");
+	// 단어 길이 순으로
+	/*strList.sort([](const String& a, const String& b) {
+		return a.getSize() < b.getSize();
+		});*/
+
+	for (String& s : strList)
+		cout << s << endl;
+
+	//save("main.cpp");
 }
