@@ -24,7 +24,15 @@ int main()
 
 	for (int i = 0; i < d.size(); ++i)
 			cout << addressof(d[i]) << endl;
-	// 메모리 주소가 4개씩 연속되어 있다
-	
-	//save("main.cpp");
+	// 메모리 주소가 4개씩 연속되어 있다(int인 경우)
+	// - 경우에 따라 다르게 표현될 수 있다
+
+	d.emplace_front(0);
+	d.emplace_back(11);
+	cout << endl;
+	for (int i = 0; i < d.size(); ++i)
+		cout << addressof(d[i]) << endl;
+	// deque은 메모리를 블럭 단위로 관리한다
+
+	save("main.cpp");
 }
