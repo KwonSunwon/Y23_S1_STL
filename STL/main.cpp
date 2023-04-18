@@ -17,9 +17,6 @@ using namespace std;
 
 extern bool 관찰;
 
-// [문제] "리스트.txt"를 읽어 list<String>에 저장하라.
-// 모두 몇 단어인가 출력하라.
-
 int main()
 {
 	ifstream in{ "리스트.txt" };
@@ -28,15 +25,24 @@ int main()
 		return 0;
 	}
 
-	String s;
-	list<String> strList;
-	while (in >> s)
-		strList.emplace_back(s);
+	list<String> strList{ istream_iterator<String>{in}, {} };
 
 	cout << strList.size() << endl;
 
-	for (auto& s : strList)
-		cout << s << endl;
+	// [문제] 입력한 단어가 있는 지, 있다면 몇 번째 단어인지 출력하라.
+	while (true) {
+		cout << "찾을 단어를 입력하시오: ";
+		String s;
+		cin >> s;
+
+		// 찾아서 출력
+		auto iter = find(strList.begin(), strList.end(), s);
+		if (iter != strList.end()) {
+			cout << distance(strList.begin(), iter) + 1 << endl;
+		}
+		else
+			cout << "없음" << endl;
+	}
 
 	//save("main.cpp");
 }

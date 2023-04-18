@@ -1,4 +1,4 @@
-cppreference.com
+ï»¿cppreference.com
  
 Create account
 Page
@@ -309,7 +309,7 @@ assign is instantiated with T
 Support usRecent changesFAQOffline version
 What links hereRelated changesUpload fileSpecial pagesPrintable versionPermanent linkPage information
 In other languages
-DeutschEspa?olFran?aisItalianoìíÜâåŞÇÑ±¹¾îPolskiPortugu?s¬²¬å¬ã¬ã¬Ü¬Ú¬ÛñéÙş
+DeutschEspaÃ±olFranÃ§aisItalianoæ—¥æœ¬èªí•œêµ­ì–´PolskiPortuguÃªsĞ ÑƒÑÑĞºĞ¸Ğ¹ä¸­æ–‡
 This page was last modified on 17 March 2023, at 07:56.
 Privacy policy About cppreference.com Disclaimers
 Powered by MediaWiki Powered by GeSHi Hosted by Tiger Technologies
