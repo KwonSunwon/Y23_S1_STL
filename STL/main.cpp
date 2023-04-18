@@ -23,25 +23,16 @@ int main()
 	ifstream in{ "리스트.txt" };
 	list<String> strList{ istream_iterator<String>{in}, {} };
 
-	// [문제] 리스트를 오름차순으로 정렬하시오.
-
-	/*sort(strList.begin(), strList.end(), [](const String& a, const String& b) {
-		return a.getString() < b.getString();
-		});*/
-	
-	strList.sort([](const String& a, const String& b){
-		return a.getString() < b.getString();
+	// [문제] 글자 수가 5인 단어를 "다섯글자.txt" 파일에 저장하라.
+	ofstream out{"다섯글자.txt"};
+	copy_if(strList.begin(), strList.end(), ostream_iterator<String>{out}, [](const String& s) {
+		return s.getSize() == 5;
 		});
-
-	strList.unique();
-
-	// 단어 길이 순으로
-	/*strList.sort([](const String& a, const String& b) {
-		return a.getSize() < b.getSize();
-		});*/
-
-	for (String& s : strList)
-		cout << s << endl;
+	
+	for (String& s : strList) {
+			if (s.getSize() == 5)
+			out << s << endl;
+	}
 
 	//save("main.cpp");
 }
