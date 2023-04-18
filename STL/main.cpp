@@ -37,12 +37,13 @@ int main()
 
 		// 찾아서 출력
 		auto iter = find(strList.begin(), strList.end(), s);
-		if (iter != strList.end()) {
-			cout << distance(strList.begin(), iter) + 1 << endl;
+		if (iter == strList.end()) {
+			cout << s << "는 없습니다." << endl;
+			continue;
 		}
-		else
-			cout << "없음" << endl;
+		
+		cout << s << "를 찾았습니다 - " << distance(strList.begin(), iter) + 1 << endl;
 	}
 
-	//save("main.cpp");
+	save("main.cpp");
 }
