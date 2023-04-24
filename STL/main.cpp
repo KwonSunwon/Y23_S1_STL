@@ -9,26 +9,30 @@
 
 #include <iostream>
 #include <span>
+#include <string>
 #include "save.h"
 #include "String.h"
 
 using namespace std;
 extern bool 관찰;
 
-void print(span<int>);
+void print(span<char>);
 
 int main()
 {
-	int a[10]{ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+	string a = "hello world";
 
-	print(a);  // a의 값을 화면에 출력
+	print(a);
+
+	const char* p = "hello world";
+	print(span<char>((char*)p, (char*)p + strlen(p)));
 
 	//save("main.cpp");
 }
 
-void print(span<int> s)
+void print(span<char> s)
 {
-	for(int i : s)
-		cout << i << ' ';
+	for(auto p = s.rbegin(); p != s.rend(); ++p)
+		cout << *p << ' ';
 	cout << endl;
 }
