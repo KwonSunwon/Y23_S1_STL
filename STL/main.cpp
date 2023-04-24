@@ -15,7 +15,7 @@
 using namespace std;
 extern bool 관찰;
 
-void print(int[]); // void print(int*)
+void print(span<int>);
 
 int main()
 {
@@ -26,10 +26,9 @@ int main()
 	//save("main.cpp");
 }
 
-void print(int a[])
+void print(span<int> s)
 {
-	//for (int i = 0; i < ???)  // 개수 정보는 절대 넘어오지 않는다.
-	for (int i = 0 ; i < 20; ++i)
-		cout << a[i] << ' ';
+	for(int i : s)
+		cout << i << ' ';
 	cout << endl;
 }
