@@ -9,8 +9,6 @@
 
 #include <iostream>
 #include <list>
-#include <fstream>
-#include <algorithm>
 #include "save.h"
 #include "String.h"
 
@@ -20,23 +18,18 @@ extern bool 관찰;
 
 int main()
 {
-	ifstream in{ "리스트.txt" };
-	list<String> strList{ istream_iterator<String>{in}, {} }; 
-	// in >> String, 
-	// friend operator>>(ostream, String)
-	// while(in >> String) {}, while((in >> String) == true)
+	list<int> a{ 1, 3, 4, 9, 5, 7 };
+	list<int> b{ 4, 10, 2, 4, 4, 8, 6 };
 
-	// [문제] 글자 수가 5인 단어를 "다섯글자.txt" 파일에 저장하라.
-	ofstream out{"다섯글자.txt"};
+	// a와 b를 merge하라
+	a.merge(b);
 
-	/*copy_if(strList.begin(), strList.end(), ostream_iterator<String>(out, "\n"), [](const String& s) {
-		return s.getSize() == 5;
-		});*/
-	
-	for (String& s : strList) {
-			if (s.getSize() == 5)
-			out << s << endl;
-	}
+	for (auto& n : a)
+		cout << n << ' ';
+	cout << endl;
+
+	for (auto& n : b)
+		cout << n << ' ';
 
 	//save("main.cpp");
 }
