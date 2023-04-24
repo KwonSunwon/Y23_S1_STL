@@ -62,6 +62,9 @@ int main()
 		else
 			idMap[players[i].getId()]++;*/
 	}
+
+	ifs.close();
+
 	std::cout << "1. 마지막 Player" << endl
 		<< players[DATA_COUNT - 1] << endl
 		<< "저장된글자:" << players[DATA_COUNT - 1].getP() << endl << endl;;
@@ -111,21 +114,21 @@ int main()
 		<< "Player Socore 평균: " << static_cast<double>(sum) / DATA_COUNT << endl << endl;
 
 	int sameIdCnt{ 0 };
-	{
-		ofstream sameIdFile{ "같은아이디.txt" };
-		for (auto iter : idMap) {
-			if (iter.second.size() >= 2) {
-				sameIdCnt += iter.second.size();
-				sameId = iter.second[0]->getId();
-				sameIdFile << iter.second[0]->getId() << " ";
-				for (auto p : iter.second) {
-					sameIdFile << p->getName() << " ";
-				}
+	ofstream sameIdFile{ "같은아이디.txt" };
+	for (auto iter : idMap) {
+		if (iter.second.size() >= 2) {
+			sameIdCnt += iter.second.size();
+			sameId = iter.second[0]->getId();
+			sameIdFile << iter.second[0]->getId() << " ";
+			for (auto p : iter.second) {
+				sameIdFile << p->getName() << " ";
 			}
-			/*if (iter.second >= 2)
-				sameIdCnt += iter.second;*/
 		}
+		/*if (iter.second >= 2)
+			sameIdCnt += iter.second;*/
 	}
+	sameIdFile.close();
+
 	// 파일 마지막 부분에 제대로 출력되지 않는 부분이 있음
 	// 2345342 dwzgleeai 
 	// 이런식으로 끝남
