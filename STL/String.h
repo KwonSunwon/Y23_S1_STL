@@ -9,6 +9,35 @@ class ostream;
 class stirng;
 
 // 2023. 5. 8 추가
+// String이 제공하는 반복자
+class String_iterator {
+public:
+	using iterator_category = std::random_access_iterator_tag;
+	using value_type = char;
+	using difference_type = int;
+	using pointer = char*;
+	using reference = char&;
+
+private:
+	char* p;
+
+public:
+	String_iterator() = default;
+	String_iterator(char* p) : p{ p } {}
+
+	char& operator*() const {
+		return *p;
+	}
+	String_iterator& operator++() {
+		++p;
+		return *this;
+	}
+	bool operator!=(const String_iterator& rhs) const {
+		return p != rhs.p;
+	}
+};
+
+// 2023. 5. 8 추가
 // String이 제공하는 역방향 반복자
 class String_reverse_iterator {
 	char* p;
@@ -75,14 +104,16 @@ public:
 	// gettor / settor
 	std::string getString() const;
 	size_t getSize() const;
-
+		
 	// 그 외 함수들
 	void print(const char* msg) const;
 
 	// 2023. 5. 8 추가
 	// String이 STL 컨테이너라면 제공해야 할 멤버
-	char* begin();
-	char* end();
+	//char* begin();
+	//char* end();
+	String_iterator begin();
+	String_iterator end();
 	//std::reverse_iterator<char*> rbegin();
 	//std::reverse_iterator<char*> rend();
 	String_reverse_iterator rbegin();

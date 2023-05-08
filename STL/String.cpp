@@ -132,12 +132,12 @@ void String::print(const char* msg) const
 
 // 2023. 5. 8 추가
 // String이 STL 컨테이너라면 제공해야 할 멤버
-char* String::begin()
+String_iterator String::begin()
 {
 	return p;
 }
 
-char* String::end()
+String_iterator String::end()
 {
 	return p + len;
 }
