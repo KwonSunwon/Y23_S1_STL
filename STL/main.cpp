@@ -7,10 +7,9 @@
 //-------------------------------------------------------
 
 #include <iostream>
+#include <algorithm>
 #include "save.h"
 #include "String.h"
-
-#include <vector>
 
 using namespace std;
 
@@ -21,15 +20,15 @@ using namespace std;
 //		cout << *p << ' ';
 //}
 
-template<typename T>
-void showCategory(T iter)
+template<typename Iterator>
+void showCategory(Iterator iter)
 {
-	cout << typeid(T::iterator_category).name() << endl;
+	cout << typeid(Iterator::iterator_category).name() << endl;
 }
 
 int main()
 {
-	String s{ "1234567890" };
+	String s{ "The Quick Brown Fox Jumps Over The Lazy Dog" };
 
 	// s를 역방향으로 출력하시오
 	//for (auto p = s.end(); p != s.begin();)
@@ -54,8 +53,11 @@ int main()
 	//cout << endl;
 
 	// s가 제공하는 반복자가 random_access_iterator_tag가 되도록 하려면?
-	showCategory(s.begin());
-	cout << typeid(String_iterator::iterator_category).name() << endl;
+	//showCategory(s.begin());
+
+	sort(s.begin(), s.end());
+
+	cout << s << endl;
 
 	//save("main.cpp");
 }
