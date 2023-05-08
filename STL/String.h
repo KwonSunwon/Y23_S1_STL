@@ -58,4 +58,9 @@ public:
 
 	// 그 외 함수들
 	void print(const char* msg) const;
+
+	// 2023. 5. 8 추가
+	// String이 STL 컨테이너라면 제공해야 할 멤버
+	char* begin();
+	char* end();
 };

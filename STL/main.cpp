@@ -14,6 +14,11 @@ using namespace std;
 
 int main()
 {
+	String s{ "1234567890" };
 
-	save("main.cpp");
+	for (auto p = s.begin(); p != s.end(); ++p)
+		cout << *p << ' ';
+	cout << endl;
+
+	//save("main.cpp");
 }
