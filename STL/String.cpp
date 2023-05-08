@@ -142,4 +142,25 @@ char* String::end()
 	return p + len;
 }
 
+// String이 제공하는 역방향 반복자
+String_reverse_iterator String::rbegin()
+{
+	return String_reverse_iterator(p + len);
+};
+
+String_reverse_iterator String::rend()
+{
+	return String_reverse_iterator(p);
+}
+
+//std::reverse_iterator<char*> String::rbegin()
+//{
+//	return std::reverse_iterator<char*>(p + len);
+//}
+//
+//std::reverse_iterator<char*> String::rend()
+//{
+//	return std::reverse_iterator<char*>(p);
+//}
+
 size_t String::sid{ 0 };

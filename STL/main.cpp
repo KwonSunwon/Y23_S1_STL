@@ -13,19 +13,19 @@
 
 using namespace std;
 
-template<typename T>
-void reverse_print(span<T> s)
-{
-	for(auto p = s.rbegin(); p != s.rend(); ++p)
-		cout << *p << ' ';
-}
+//template<typename T>
+//void reverse_print(span<T> s)
+//{
+//	for(auto p = s.rbegin(); p != s.rend(); ++p)
+//		cout << *p << ' ';
+//}
 
 int main()
 {
 	String s{ "1234567890" };
 
 	// s를 역방향으로 출력하시오
-	for (auto p = s.end(); p != s.begin();)
+	/*for (auto p = s.end(); p != s.begin();)
 		cout << *--p << ' ';
 	cout << endl;
 
@@ -34,7 +34,12 @@ int main()
 		cout << *p << ' ';
 	cout << endl;
 
-	reverse_print(span<char>(s));
+	reverse_print(span<char>(s));*/
+
+	// STL 컨테이너라면 rbegin(), rend()도 제공할 수 있다.
+	for (auto p = s.rbegin(); p != s.rend(); p.operator++())
+		cout << p.operator*() << ' ';
+	cout << endl;
 
 	//save("main.cpp");
 }

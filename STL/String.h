@@ -8,6 +8,26 @@
 class ostream;
 class stirng;
 
+// 2023. 5. 8 추가
+// String이 제공하는 역방향 반복자
+class String_reverse_iterator {
+	char* p;
+public:
+	String_reverse_iterator() = default;
+	String_reverse_iterator(char* p) : p{ p } {}
+
+	char& operator*() const {
+		return *(p - 1);
+	}
+	String_reverse_iterator& operator++() {
+		--p;
+		return *this;
+	}
+	bool operator!=(const String_reverse_iterator& rhs) const {
+		return p != rhs.p;
+	}
+};
+
 class String {
 	size_t len{};				// 확보한 자원의 바이트 수
 	char* p{};					// 확보한 자원의 주소
@@ -40,7 +60,7 @@ public:
 			os << s.p[i];
 		return os;
 	}
-	
+
 	// 2023. 4. 4 추가
 	friend std::istream& operator>>(std::istream& is, String& s) {
 		std::string str;
@@ -63,4 +83,8 @@ public:
 	// String이 STL 컨테이너라면 제공해야 할 멤버
 	char* begin();
 	char* end();
+	//std::reverse_iterator<char*> rbegin();
+	//std::reverse_iterator<char*> rend();
+	String_reverse_iterator rbegin();
+	String_reverse_iterator rend();
 };
