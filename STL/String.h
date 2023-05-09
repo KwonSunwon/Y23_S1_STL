@@ -32,9 +32,6 @@ public:
 		++p;
 		return *this;
 	}
-	bool operator!=(const String_iterator& rhs) const {
-		return p != rhs.p;
-	}
 	
 	// 2023. 5. 9 추가
 	// sort에 필요한 연산자들
@@ -45,16 +42,6 @@ public:
 		--p;
 		return *this;
 	}
-	
-	bool operator==(const String_iterator& rhs) const {
-		return p == rhs.p;
-	}
-	bool operator<(const String_iterator& rhs) const {
-		return p < rhs.p;
-	}
-	bool operator>(const String_iterator& rhs) const {
-		return p > rhs.p;
-	}
 
 	String_iterator operator+(difference_type n) const {
 		return String_iterator(p + n);
@@ -62,6 +49,10 @@ public:
 	String_iterator operator-(difference_type n) const {
 		return String_iterator(p - n);
 	}
+
+	// == != < <= > >= Relational operators
+	// C++20에서는 <=>(Spaceship, Three-way comparison operator) 연산자로 한 번만 코딩
+	bool operator<=>(const String_iterator& rhs) const = default;
 };
 
 // 2023. 5. 8 추가
