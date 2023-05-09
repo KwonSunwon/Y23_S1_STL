@@ -52,7 +52,7 @@ public:
 
 	// == != < <= > >= Relational operators
 	// C++20에서는 <=>(Spaceship, Three-way comparison operator) 연산자로 한 번만 코딩
-	bool operator<=>(const String_iterator& rhs) const = default;
+	auto operator<=>(const String_iterator& rhs) const = default;
 };
 
 // 2023. 5. 8 추가

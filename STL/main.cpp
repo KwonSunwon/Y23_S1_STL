@@ -8,26 +8,50 @@
 
 #include <iostream>
 #include <algorithm>
+#include <list>
 #include "save.h"
 #include "String.h"
 
-#include <vector>
-
 using namespace std;
 
-template<typename Iterator>
-void showCategory(Iterator iter)
+//template<typename Iter, typename t>
+//Iter my_find(Iter b, Iter e, t v)
+//{
+//	while (b != e) {
+//		if (*b == v)
+//			return b;
+//		++b;
+//	}
+//	return e;
+//}
+
+template<class Iter, class Val>
+Iter my_find(Iter beg, Iter end, Val val)
 {
-	cout << typeid(Iterator::iterator_category).name() << endl;
+	while (beg != end) {
+		if (*beg == val)
+			return beg;
+		++beg;
+	}
+	return end;
 }
 
 int main()
 {
-	String s{ "the quick brown fox jumps over the lazy dog" };
+	String s{ "Containers - Iterators - Algorithms" };
 
-	sort(s.begin(), s.end());
+	auto iter = my_find(s.begin(), s.end(), 's');
+	if (iter != s.end())
+		cout << distance(s.begin(), iter) + 1 << " 위치에서 발견" << endl;
+	else
+		cout << "없음" << endl;
 
-	cout << s << endl;
+	list<int> li{ 1,2,3,4,5,6,7,8,9,10 };
+	auto iter2 = my_find(li.begin(), li.end(), 5);
+	if (iter2 != li.end())
+		cout << distance(li.begin(), iter2) + 1 << " 위치에서 발견" << endl;
+	else
+		cout << "없음" << endl;
 
 	//save("main.cpp");
 }
