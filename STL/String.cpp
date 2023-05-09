@@ -10,6 +10,7 @@
 #include "String.h"
 
 bool 관찰{ false };				// 관찰하고 싶으면 true로 변경
+size_t String::sid{ 0 };
 
 String::String()
 {
@@ -115,12 +116,6 @@ std::string String::getString() const
 	return std::string(p, len);
 }
 
-// 2023. 4. 4 추가
-size_t String::getSize() const
-{
-	return len;
-}
-
 // 그 외 함수들
 void String::print(const char* msg) const
 {
@@ -163,4 +158,9 @@ String_reverse_iterator String::rend()
 //	return std::reverse_iterator<char*>(p);
 //}
 
-size_t String::sid{ 0 };
+// 2023. 4. 4 추가
+// 2023. 5. 9 수정 - getSize() -> size()
+size_t String::size() const
+{
+	return len;
+}

@@ -45,7 +45,7 @@ public:
 
 	// getter/setter
 	std::string getString() const;
-	size_t getSize() const;
+	size_t size() const;
 
 	void print(const char* msg) const;
 };

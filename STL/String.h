@@ -121,7 +121,6 @@ public:
 
 	// gettor / settor
 	std::string getString() const;
-	size_t getSize() const;
 		
 	// 그 외 함수들
 	void print(const char* msg) const;
@@ -136,4 +135,7 @@ public:
 	//std::reverse_iterator<char*> rend();
 	String_reverse_iterator rbegin();
 	String_reverse_iterator rend();
+
+	// 2023. 5. 9 수정 - getSize() -> size()
+	size_t size() const;
 };

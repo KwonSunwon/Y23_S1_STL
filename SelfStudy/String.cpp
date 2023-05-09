@@ -91,7 +91,7 @@ std::string String::getString() const
 	return std::string(p.get(), len);
 }
 
-size_t String::getSize() const
+size_t String::size() const
 {
 	return len;
 }

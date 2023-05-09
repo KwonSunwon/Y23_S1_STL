@@ -7,23 +7,11 @@
 //-------------------------------------------------------
 
 #include <iostream>
-#include <algorithm>
-#include <list>
+#include <vector>
 #include "save.h"
 #include "String.h"
 
 using namespace std;
-
-//template<typename Iter, typename t>
-//Iter my_find(Iter b, Iter e, t v)
-//{
-//	while (b != e) {
-//		if (*b == v)
-//			return b;
-//		++b;
-//	}
-//	return e;
-//}
 
 template<class Iter, class Val>
 Iter my_find(Iter beg, Iter end, Val val)
@@ -36,40 +24,41 @@ Iter my_find(Iter beg, Iter end, Val val)
 	return end;
 }
 
-template<class Iter, class Pred>
-Iter my_find_if(Iter beg, Iter end, Pred pred)
+template<class Iter, class Callable>
+Iter my_find_if(Iter beg, Iter end, Callable f)
 {
 	while (beg != end) {
-		if (pred(*beg))
+		if (f(*beg))
 			return beg;
 		++beg;
 	}
 	return end;
 }
 
+template<class InputIter, class OutputIter2>
+void my_copy(InputIter beg, InputIter end, OutputIter2 dest)
+{
+	while (beg != end) {
+		*dest = *beg;
+		++beg;
+		++dest;
+	}
+}
+
 int main()
 {
-	String s{ "coNtainers - iterators - Algorithms" };
+	String s{ "여기 내용이 복사되나요?" };
+	vector<char> v;
+	v.reserve(s.size());
 
-	// 처음 만나는 대문자는 몇 번째 글자?
-	auto iter = my_find_if(s.begin(), s.end(), [](char c) {return isupper(c); });
-	if (iter != s.end())
-		cout << distance(s.begin(), iter) + 1 << "번 째 위치에서 발견" << endl;
-	else
-		cout << "없음" << endl;
+	my_copy(s.begin(), s.end(), back_inserter(v));
 
-	/*auto iter = my_find(s.begin(), s.end(), 's');
-	if (iter != s.end())
-		cout << distance(s.begin(), iter) + 1 << " 위치에서 발견" << endl;
-	else
-		cout << "없음" << endl;
-
-	list<int> li{ 1,2,3,4,5,6,7,8,9,10 };
-	auto iter2 = my_find(li.begin(), li.end(), 5);
-	if (iter2 != li.end())
-		cout << distance(li.begin(), iter2) + 1 << " 위치에서 발견" << endl;
-	else
-		cout << "없음" << endl;*/
+	for (char c : v)
+		cout << c;
+	cout << endl;
+	auto p = v.data();
+	for (int i = 0; i < s.size(); ++i)
+		cout << p[i];
 
 	//save("main.cpp");
 }
