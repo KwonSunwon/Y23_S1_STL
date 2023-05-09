@@ -36,11 +36,29 @@ Iter my_find(Iter beg, Iter end, Val val)
 	return end;
 }
 
+template<class Iter, class Pred>
+Iter my_find_if(Iter beg, Iter end, Pred pred)
+{
+	while (beg != end) {
+		if (pred(*beg))
+			return beg;
+		++beg;
+	}
+	return end;
+}
+
 int main()
 {
-	String s{ "Containers - Iterators - Algorithms" };
+	String s{ "coNtainers - iterators - Algorithms" };
 
-	auto iter = my_find(s.begin(), s.end(), 's');
+	// 처음 만나는 대문자는 몇 번째 글자?
+	auto iter = my_find_if(s.begin(), s.end(), [](char c) {return isupper(c); });
+	if (iter != s.end())
+		cout << distance(s.begin(), iter) + 1 << "번 째 위치에서 발견" << endl;
+	else
+		cout << "없음" << endl;
+
+	/*auto iter = my_find(s.begin(), s.end(), 's');
 	if (iter != s.end())
 		cout << distance(s.begin(), iter) + 1 << " 위치에서 발견" << endl;
 	else
@@ -51,7 +69,7 @@ int main()
 	if (iter2 != li.end())
 		cout << distance(li.begin(), iter2) + 1 << " 위치에서 발견" << endl;
 	else
-		cout << "없음" << endl;
+		cout << "없음" << endl;*/
 
 	//save("main.cpp");
 }
