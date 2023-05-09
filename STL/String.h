@@ -14,7 +14,7 @@ class String_iterator {
 public:
 	using iterator_category = std::random_access_iterator_tag;
 	using value_type = char;
-	using difference_type = int;
+	using difference_type = long long;
 	using pointer = char*;
 	using reference = char&;
 
@@ -34,6 +34,33 @@ public:
 	}
 	bool operator!=(const String_iterator& rhs) const {
 		return p != rhs.p;
+	}
+	
+	// 2023. 5. 9 추가
+	// sort에 필요한 연산자들
+	difference_type operator-(const String_iterator& rhs) const {
+		return p - rhs.p;
+	}
+	String_iterator& operator--() {
+		--p;
+		return *this;
+	}
+	
+	bool operator==(const String_iterator& rhs) const {
+		return p == rhs.p;
+	}
+	bool operator<(const String_iterator& rhs) const {
+		return p < rhs.p;
+	}
+	bool operator>(const String_iterator& rhs) const {
+		return p > rhs.p;
+	}
+
+	String_iterator operator+(difference_type n) const {
+		return String_iterator(p + n);
+	}
+	String_iterator operator-(difference_type n) const {
+		return String_iterator(p - n);
 	}
 };
 
