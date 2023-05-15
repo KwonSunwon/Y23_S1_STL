@@ -21,10 +21,22 @@ using namespace std;
 int main()
 {
 	ifstream in{ "이상한 나라의 앨리스.txt" };
+	set<String, less<String>> s{ istream_iterator<String>{in}, {} };
+	cout << "읽은 개수: " << s.size() << endl;
 
-	multiset<String, less<String>> v{ istream_iterator<String>{in}, {} };
+	// [문제] 사용자가 입력한 단어가 set에 있는지 있다면 몇 번째 단어인지 출력
 
-	cout << "읽은 개수: " << v.size() << endl;
+	while (true) {
+		cout << "찾을 단어를 입력하세요: ";
+		String word;
+		cin >> word;
 
-	//save("main.cpp");
+		auto iter = s.find(word);
+		if(iter != s.end())
+			cout << "찾은 단어 위치: " << distance(s.begin(), iter) + 1 << endl;
+		else
+			cout << "찾지 못했습니다." << endl;
+	}
+
+	save("main.cpp");
 }
