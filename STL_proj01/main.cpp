@@ -6,9 +6,14 @@
 #include <numeric>
 #include <chrono>
 #include <map>
+#include <unordered_map>
+#include <span>
+#include <execution>
 #include "Player.h"
 
 #define DATA_COUNT 2'000'000
+
+#define DEBUG 1
 
 using namespace std;
 
@@ -19,21 +24,19 @@ void find_player(int id);
 
 array<Player, DATA_COUNT> players;
 
-array<Player, DATA_COUNT> sortedByIDPlayers;
-array<Player, DATA_COUNT> sortedByNamePlayers;
-array<Player, DATA_COUNT> sortedByScorePlayers;
+//array<Player, DATA_COUNT> sortedByIDPlayers;
+//array<Player, DATA_COUNT> sortedByNamePlayers;
+//array<Player, DATA_COUNT> sortedByScorePlayers;
 
 array<Player*, DATA_COUNT> sortedByIDPlayersPtr;
 array<Player*, DATA_COUNT> sortedByNamePlayersPtr;
 array<Player*, DATA_COUNT> sortedByScorePlayersPtr;
 
-vector<Player> findPlayers;
 int over10A{ 0 };
 
-map<int, vector<Player*>> idMap;
+//unordered_map<size_t, vector<string>> idMap;
 //map<int, int> idMap;
 
-int sameId{ 0 };
 
 int main()
 {
@@ -44,89 +47,132 @@ int main()
 		exit(1);
 	}
 
-	//int maxScore{ numeric_limits<int>::min() };
-	//Player* maxPlayer{ nullptr };
+#if DEBUG
+	auto start{ chrono::high_resolution_clock::now() };
+#endif
+
 	for (int i = 0; i < DATA_COUNT; ++i) {
 		ifs >> players[i];
+
+		//idMap[players[i].getId()].emplace_back(players[i].getName());
+
+		//sumInFor += players[i].getScore();
+
 		//int tempScore{ players[i].getScore() };
 		//if (maxScore < tempScore) {
 			//maxScore = tempScore;
 			//maxPlayer = &players[i];
 		//}
 		//players[i].sortP();
-		//over10A += players[i].isOver10A();
 
-		idMap[players[i].getId()].emplace_back(&players[i]);
+
 		/*if (idMap.find(players[i].getId()) == idMap.end())
 			idMap[players[i].getId()] = 1;
-		else
 			idMap[players[i].getId()]++;*/
 	}
 
-	ifs.close();
+#if DEBUG
+	auto end{ chrono::high_resolution_clock::now() };
+	auto duration{ chrono::duration_cast<chrono::milliseconds>(end - start) };
+	cout << "읽기 시간: " << duration.count() << "ms" << endl;
+#endif
+
+	//ifs.close();
 
 	std::cout << "1. 마지막 Player" << endl
 		<< players[DATA_COUNT - 1] << endl
 		<< "저장된글자:" << players[DATA_COUNT - 1].getP() << endl << endl;;
 
-	//start = chrono::high_resolution_clock::now();
-	pointing_players();
-	//end = chrono::high_resolution_clock::now();
-	//cout << "포인팅 시간: " << chrono::duration_cast<chrono::milliseconds>(end - start).count() << "ms" << endl;
+#if DEBUG
+	start = chrono::high_resolution_clock::now();
+#endif
 
 	// 정렬도 생각보다 여전히 시간이 걸림
 	// 시간을 더 줄일 수 있는 방법?
+	pointing_players();
 	sort_players();
 
-	/*cout << "ID 정렬" << endl;
-	for (const Player* p : sortedByIDPlayersPtr
-		| views::take(3))
-		cout << *p << endl;
-	for (const Player* p : sortedByIDPlayersPtr
-		| views::drop(DATA_COUNT - 3))
-		cout << *p << endl;
-	cout << endl;
+#if DEBUG
+	end = chrono::high_resolution_clock::now();
+	duration = chrono::duration_cast<chrono::milliseconds>(end - start);
+	cout << "정렬 시간: " << duration.count() << "ms" << endl;
+#endif
+	
 
-	cout << "이름 정렬" << endl;
-	for (const Player* p : sortedByNamePlayersPtr
-		| views::take(3))
-		cout << *p << endl;
-	for (const Player* p : sortedByNamePlayersPtr
-		| views::drop(DATA_COUNT - 3))
-		cout << *p << endl;
-	cout << endl;
+#if DEBUG
+	start = chrono::high_resolution_clock::now();
+#endif
 
-	cout << "점수 정렬" << endl;
-	for (const Player* p : sortedByScorePlayersPtr
-		| views::take(3))
-		cout << *p << endl;
-	for (const Player* p : sortedByScorePlayersPtr
-		| views::drop(DATA_COUNT - 3))
-		cout << *p << endl;
-	cout << endl;*/
+	//long long sum{ 0 };
+	//for (int i = 0; i < players.size(); ++i) {
+	//	sum += players[i].getScore();
+	//}
 
-	long long sum{ accumulate(players.begin(), players.end(), 0, [](long long total, const Player& p) {
-			return total + p.getScore();
-			}) };
+	//long long sum = accumulate(players.begin(), players.end(), 0ll, [](long long total, const Player& p) {
+	//		return total + p.getScore();
+	//		});
+
+	//long long sum = reduce(execution::par ,players.begin(), players.end(), 0ll, [](long long total, const Player& p) {
+	//		return total + p.getScore();
+	//		});
+
+	long long sum = sumScore(span<Player>{players});
+
+#if DEBUG
+	end = chrono::high_resolution_clock::now();
+	auto durationUs = chrono::duration_cast<chrono::microseconds>(end - start);
+	cout << "총합 구하는 시간:" << durationUs.count() << "us" << endl;
+#endif
 
 	std::cout << "2. Score가 가장 큰 Player" << endl
 		<< *sortedByScorePlayersPtr[DATA_COUNT - 1] << endl
-		<< "Player Socore 평균: " << static_cast<double>(sum) / DATA_COUNT << endl << endl;
+		<< "Player Score 평균: " << fixed << static_cast<double>(sum) / DATA_COUNT << endl << endl;
 
-	int sameIdCnt{ 0 };
 	ofstream sameIdFile{ "같은아이디.txt" };
-	for (auto iter : idMap) {
-		if (iter.second.size() >= 2) {
-			sameIdCnt += iter.second.size();
-			sameId = iter.second[0]->getId();
-			sameIdFile << iter.second[0]->getId() << " ";
-			for (auto p : iter.second) {
-				sameIdFile << p->getName() << " ";
-			}
+
+#if DEBUG
+	start = chrono::high_resolution_clock::now();
+#endif
+
+	size_t sameIdCnt{ 0 };
+
+	/*for (int i = 0; i < idMap.size(); ++i) {
+		if (idMap[i].size() > 1) {
+			sameIdCnt += idMap[i].size();
+			sameIdFile << i << " ";
+			for (int j = 0; j < idMap[i].size(); ++j)
+				sameIdFile << idMap[i][j] << " ";
 		}
-		/*if (iter.second >= 2)
-			sameIdCnt += iter.second;*/
+	}*/
+
+	if (sortedByIDPlayersPtr[0]->getId() == sortedByIDPlayersPtr[1]->getId()) {
+		sameIdCnt++;
+		sameIdFile << sortedByIDPlayersPtr[0]->getId() << " "
+			<< sortedByIDPlayersPtr[0]->getName() << " ";
 	}
+	for (int i = 1; i < DATA_COUNT - 1; ++i) {
+		if (sortedByIDPlayersPtr[i]->getId() == sortedByIDPlayersPtr[i - 1]->getId()) {
+			sameIdCnt++;
+			sameIdFile << sortedByIDPlayersPtr[i]->getName() << " ";
+		}
+		else if (sortedByIDPlayersPtr[i]->getId() == sortedByIDPlayersPtr[i + 1]->getId()) {
+			sameIdCnt++;
+			sameIdFile << sortedByIDPlayersPtr[i]->getId() << " "
+				<< sortedByIDPlayersPtr[i]->getName() << " ";
+		}
+	}
+	if (sortedByIDPlayersPtr[DATA_COUNT - 1]->getId() == sortedByIDPlayersPtr[DATA_COUNT - 2]->getId()) {
+		sameIdCnt++;
+		sameIdFile << sortedByIDPlayersPtr[DATA_COUNT - 1]->getName();
+	}
+
+#if DEBUG
+	end = chrono::high_resolution_clock::now();
+	duration = chrono::duration_cast<chrono::milliseconds>(end - start);
+	cout << "수행 시간: " << duration.count() << "ms" << endl;
+#endif
+
+	//sameIdFile << flush;
 	sameIdFile.close();
 
 	// 파일 마지막 부분에 제대로 출력되지 않는 부분이 있음
@@ -139,18 +185,28 @@ int main()
 	// 버퍼에 일부 데이터가 남아 제대로 출력이 안될 수 있다고 했는데
 	// 진짜 파일 여는 것을 스코프로 묶어서 작업이 끝나면 사라지게 하니까
 	// 정상적으로 작동함;;
-	
-	// 1149459
+
+	// 1149459 
 	cout << "3. ID가 서로 같은 객체의 개수: " << sameIdCnt << endl << endl;
 
-	// 이 부분 시간 줄일 수 있는 방법 없을까?
-	for (Player& p : players) {
-		p.sortP();
-		over10A += p.isOver10A();
+#if DEBUG
+	start = chrono::high_resolution_clock::now();
+#endif
+
+	for (int i = 0; i < DATA_COUNT; ++i) {
+		players[i].sortP();
+		over10A += players[i].isOver10A();
 	}
+
+#if DEBUG
+	end = chrono::high_resolution_clock::now();
+	duration = chrono::duration_cast<chrono::milliseconds>(end - start);
+	cout << "수행 시간: " << duration.count() << "ms" << endl;
+#endif
 
 	std::cout << "4. 'a'가 10글자 이상인 Player 개수: " << over10A << endl << endl;
 
+	// 983062
 
 	//auto iterName = find_if(sortedByNamePlayersPtr.begin(), sortedByNamePlayersPtr.end(), [](const Player* p, const Player* ptr) {
 		//return p == ptr;
@@ -164,13 +220,13 @@ int main()
 	// 만약에 같은 id를 객체가 두 개 이상 존재할 때
 	// 해당 객체의 이름 정렬에서도 id에 해당하는 모든 객체에 대해서 해당 일을 해야 하는건가?
 
-	for (const auto& p : sortedByIDPlayersPtr
-		| views::drop(DATA_COUNT - 5)) {
-		cout << *p << endl;
-	}
+	//for (const auto& p : sortedByIDPlayersPtr
+	//	| views::drop(DATA_COUNT - 5)) {
+	//	cout << *p << endl;
+	//}
 
+	//cout << *sortedByIDPlayersPtr.back() << endl;
 
-	findPlayers.reserve(10);
 	int id;
 	do {
 		cout << "ID를 입력하세요: ";
@@ -193,9 +249,9 @@ void copy_players()
 	//auto duration = chrono::duration_cast<chrono::microseconds>(end - start);
 	//cout << duration.count() << "us" << endl;
 
-	sortedByIDPlayers = players;
-	sortedByNamePlayers = players;
-	sortedByScorePlayers = players;
+	//sortedByIDPlayers = players;
+	//sortedByNamePlayers = players;
+	//sortedByScorePlayers = players;
 }
 
 void pointing_players()
@@ -232,7 +288,10 @@ void sort_players()
 
 void find_player(int playerId)
 {
-	findPlayers.clear();
+	vector<int> findScores;
+	vector<string> findNames;
+	findScores.reserve(10);
+	findNames.reserve(10);
 
 	auto iter = lower_bound(sortedByIDPlayersPtr.begin(), sortedByIDPlayersPtr.end(), playerId, [](const Player* p, int id) {
 		return p->getId() < id;
@@ -249,23 +308,32 @@ void find_player(int playerId)
 	cout << "ID 기준 정렬" << endl;
 	if (iter != sortedByIDPlayersPtr.begin())
 		cout << **(iter - 1) << endl;
-	while ((*iter)->getId() == playerId && iter != sortedByIDPlayersPtr.end()) {
-		findPlayers.emplace_back((*iter)->getName(), (*iter)->getScore(), (*iter)->getId(), (*iter)->getNum(), (*iter)->getP());
+	while ((*iter)->getId() == playerId && iter != sortedByIDPlayersPtr.end() - 1) {
+		findScores.emplace_back((*iter)->getScore());
+		findNames.emplace_back((*iter)->getName());
 		cout << **iter++ << endl;
 	}
 	if (iter != sortedByIDPlayersPtr.end())
-		cout << **iter << endl << endl;
+		cout << **iter << endl;
+	cout << endl;
 	//=====================================================
 
 
 	//=====================================================
 	// 이름 정렬 배열에서 해당 ID의 객체와 앞뒤 객체 출력
 	cout << "이름 기준 정렬" << endl;
-	for (const Player& p : findPlayers) {
-		string target = p.getName();
+	for (string target : findNames) {
 		auto iterName = lower_bound(sortedByNamePlayersPtr.begin(), sortedByNamePlayersPtr.end(), target, [](const Player* p, const string& name) {
 			return p->getName() < name;
 			});
+
+		// 1226773
+		while (iterName != sortedByNamePlayersPtr.end()) {
+			if ((*iterName)->getId() == playerId)
+				break;
+			++iterName;
+		}
+
 		if (iterName != sortedByNamePlayersPtr.begin())
 			cout << **(iterName - 1) << endl;
 		cout << **iterName << endl;
@@ -273,17 +341,22 @@ void find_player(int playerId)
 			cout << **(iterName + 1) << endl;
 		cout << endl;
 	}
-	cout << endl;
 	//=====================================================
 
 	//=====================================================
 	// 점수 정렬 배열에서 해당 ID의 객체와 앞뒤 객체 출력
 	cout << "점수 기준 정렬" << endl;
-	for (const Player& p : findPlayers) {
-		int target = p.getScore();
+	for (int target : findScores) {
 		auto iterScore = lower_bound(sortedByScorePlayersPtr.begin(), sortedByScorePlayersPtr.end(), target, [](const Player* p, int score) {
 			return p->getScore() < score;
 			});
+
+		while (iterScore != sortedByScorePlayersPtr.end()) {
+			if ((*iterScore)->getId() == playerId)
+				break;
+			++iterScore;
+		}
+
 		if (iterScore != sortedByScorePlayersPtr.begin())
 			cout << **(iterScore - 1) << endl;
 		cout << **iterScore << endl;
@@ -291,6 +364,5 @@ void find_player(int playerId)
 			cout << **(iterScore + 1) << endl;
 		cout << endl;
 	}
-	cout << endl;
 	//=====================================================
 }

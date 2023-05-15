@@ -1,5 +1,5 @@
 //-------------------------------------------------------
-// 2023 1학기 STL 5월 9일 (10주 2)
+// 2023 1학기 STL 5월 15일 (11주 1)
 //-------------------------------------------------------
 // String을 STL 컨테이너로 만들어 간다. - begin(), end()
 //-------------------------------------------------------
@@ -35,14 +35,16 @@ Iter my_find_if(Iter beg, Iter end, Callable f)
 	return end;
 }
 
-template<class InputIter, class OutputIter2>
-void my_copy(InputIter beg, InputIter end, OutputIter2 dest)
+template<class InputIter, class OutputIter>
+void my_copy(InputIter beg, InputIter end, OutputIter dest)
 {
-	while (beg != end) {
+	//while (beg != end) {
+	//	*dest = *beg;
+	//	++beg;
+	//	++dest;
+	//}
+	for(;beg != end; ++beg, ++dest)
 		*dest = *beg;
-		++beg;
-		++dest;
-	}
 }
 
 int main()

@@ -19,12 +19,16 @@ public:
 	Player(Player&& other) noexcept;
 	Player& operator=(Player&& other) noexcept;
 
-	friend std::ostream& operator<<(std::ostream& os, const Player& p);
+	friend std::ostream& operator<<(std::ostream& os, const Player& p) {
+		os << std::format("이름:{:<15}, 아이디:{:<10}, 점수:{:<10}, 자원수:{:<10}", p.name, p.id, p.score, p.num);
+		return os;
+	}
 
 	friend std::istream& operator>>(std::istream& is, Player& p) {
 		is.read(reinterpret_cast<char*>(&p), sizeof(Player));
 		p.p = new char[p.num];
 		is.read(p.p, p.num);
+		//std::sort(p.p, p.p + p.num);
 		return is;
 	}
 
@@ -35,5 +39,7 @@ public:
 	char* getP() const { return p; }
 
 	void sortP();
-	bool isOver10A();
+	bool isOver10A() const;
+
+	friend long long sumScore(const std::span<Player>& players);
 };
