@@ -110,6 +110,15 @@ bool String::operator==(const String& rhs) const
 	return std::equal(p, p + len, rhs.p, rhs.p + rhs.len);
 }
 
+// 2023. 5. 15 추가
+// set이 요구하는 default 정렬기준
+bool String::operator<(const String& rhs) const
+{
+	// 어떤 식으로 정렬할지는 프로그래머 마음따라...
+	// 이지만 예상하는데로 주는 게 합당할 것(사전식 정렬)
+	return getString() < rhs.getString();
+}
+
 // gettor / settor
 std::string String::getString() const
 {
