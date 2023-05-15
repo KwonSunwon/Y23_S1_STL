@@ -15,32 +15,33 @@
 #include <iostream>
 #include <fstream>
 #include <set>
+#include <algorithm>
 #include "save.h"
 #include "String.h"
 
 using namespace std;
 
-template<>
-struct less<String> {
-	bool operator()(const String& a, const String& b) const {
-		return a.size() < b.size();
-	}
-};
-
-struct 소문자우선{
-	bool operator()(const String& a, const String& b) const {
-		if (isupper(a.getString()[0]))
-			if(islower(b.getString()[0]))
-				return false;
-		return true;
-	}
-};
-
 int main()
 {
 	ifstream in{ "이상한 나라의 앨리스.txt" };
-	set<String, 소문자우선> s{istream_iterator<String>{in}, {}};
+	set<String> s{ istream_iterator<String>{in}, {} };
 	cout << "읽은 개수: " << s.size() << endl;
+
+	// [문제] 문자를 하나 입력받아 그 문자가 들어간 String을 모두 출력하라
+	while (true) {
+		cout << "문자를 입력하세요: ";
+		char c;
+		cin >> c;
+
+		cout << c << "가 포함된 String입니다" << endl;
+		for (auto str : s) {
+			//if (str.getString().contains(c))
+			auto it = find(str.begin(), str.end(), c);
+			if (it != str.end())
+				cout << str << endl;
+		}
+		cout << endl;
+	}
 
 	//save("main.cpp");
 }
