@@ -13,11 +13,11 @@
 //-------------------------------------------------------
 
 #include <iostream>
-#include <fstream>
 #include <set>
 #include <algorithm>
 #include <ranges>
-#include <vector>
+#include <random>
+#include <numeric>
 #include "save.h"
 #include "String.h"
 
@@ -25,10 +25,29 @@ using namespace std;
 
 int main()
 {
-	// 키보드에서 입력한 단어를 사전식 오름차순 정렬하여 출력하라
-	set<String> s{ istream_iterator<String>{cin}, {} };
-	for (const String& s : s)
-		cout << s << endl;
+	// 1부터 100까지 정수를 하나도 빠짐없이 랜덤하게 출력하라.
+	vector<int> v;
+	//set<int> s;
+	
+	default_random_engine dre{ random_device()() };
+	//uniform_int_distribution<int> uid(1, 45);
+
+	v.resize(45);
+	iota(v.begin(), v.end(), 1);
+
+
+	for (int i = 0; i < 100; ++i) {
+		shuffle(v.begin(), v.end(), dre);
+		for (int i = 0; i < 6; ++i)
+			cout << v[i] << " ";
+		cout << endl;
+	}
+
+	//while (s.size() != 100){
+	//	int n = uid(dre);
+	//	if (s.insert(n).second)
+	//		cout << n << " ";
+	//}
 
 	//save("main.cpp");
 }
