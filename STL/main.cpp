@@ -1,5 +1,5 @@
 //-------------------------------------------------------
-// 2023 1학기 STL 5월 15일 (11주 1)
+// 2023 1학기 STL 5월 16일 (11주 2)
 //-------------------------------------------------------
 // Associative 컨테이너 = set/map (상등서/동등성)
 // "이상한 나라의 앨리스.txt" - 26634
@@ -27,17 +27,17 @@ int main()
 	set<String> s{ istream_iterator<String>{in}, {} };
 	cout << "읽은 개수: " << s.size() << endl;
 
-	// [문제] 문자를 하나 입력받아 그 문자가 들어간 String을 모두 출력하라
+	// [문제] String을 입력받아 그 String이 들어간 set의 원소를 출력하라
 	while (true) {
 		cout << "문자를 입력하세요: ";
-		char c;
-		cin >> c;
+		String word;
+		cin >> word;
 
-		cout << c << "가 포함된 String입니다" << endl;
+		cout << word << "가 포함된 String입니다" << endl;
+		// string으로 변환하지 않고
 		for (auto str : s) {
-			//if (str.getString().contains(c))
-			auto it = find(str.begin(), str.end(), c);
-			if (it != str.end())
+			auto iter = search(str.begin(), str.end(), word.begin(), word.end());
+			if (iter != str.end())
 				cout << str << endl;
 		}
 		cout << endl;

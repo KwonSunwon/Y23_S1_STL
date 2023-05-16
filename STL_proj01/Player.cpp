@@ -25,15 +25,11 @@ Player::Player(std::string name, int score, size_t id, size_t num, char* p)
 	this->num = num;
 	this->p = new char[num];
 	memcpy(this->p, p, num);
-
-	//std::cout << "생성자 호출" << std::endl;
 }
 
 Player::~Player()
 {
 	delete[] p;
-
-	//std::cout << "소멸자 호출" << std::endl;
 }
 
 Player::Player(Player& other)
@@ -44,8 +40,6 @@ Player::Player(Player& other)
 	num = other.num;
 	p = new char[num];
 	memcpy(p, other.p, num);
-
-	//std::cout << "복사 생성자 호출" << std::endl;
 }
 
 Player& Player::operator=(Player& other)
@@ -61,8 +55,6 @@ Player& Player::operator=(Player& other)
 
 	p = new char[num];
 	memcpy(p, other.p, num);
-
-	//std::cout << "복사 할당 연산자 호출" << std::endl;
 
 	return *this;
 }
@@ -80,8 +72,6 @@ Player::Player(Player&& other) noexcept
 	other.id = 0;
 	other.num = 0;
 	other.p = nullptr;
-
-	//std::cout << "이동 생성자 호출" << std::endl;
 }
 
 Player& Player::operator=(Player&& other) noexcept
@@ -103,8 +93,6 @@ Player& Player::operator=(Player&& other) noexcept
 	other.num = 0;
 	other.p = nullptr;
 
-	//std::cout << "이동 할당 연산자 호출" << std::endl;
-
 	return *this;
 }
 
@@ -118,7 +106,6 @@ bool Player::isOver10A() const
 	//return std::count_if(p, p + num, [](char c) { return c == 'a'; }) >= 10;
 	if(num < 10) return false;
 	return p[9] == 'a';
-	// 문제 조건에서 정렬을 하라고 했으므로, 10번째 원소가 'a'인지만 확인하면 된다.
 }
 
 long long sumScore(const std::span<Player>& players)
