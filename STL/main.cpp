@@ -16,6 +16,8 @@
 #include <fstream>
 #include <set>
 #include <algorithm>
+#include <ranges>
+#include <vector>
 #include "save.h"
 #include "String.h"
 
@@ -23,25 +25,10 @@ using namespace std;
 
 int main()
 {
-	ifstream in{ "이상한 나라의 앨리스.txt" };
-	set<String> s{ istream_iterator<String>{in}, {} };
-	cout << "읽은 개수: " << s.size() << endl;
-
-	// [문제] String을 입력받아 그 String이 들어간 set의 원소를 출력하라
-	while (true) {
-		cout << "문자를 입력하세요: ";
-		String word;
-		cin >> word;
-
-		cout << word << "가 포함된 String입니다" << endl;
-		// string으로 변환하지 않고
-		for (auto str : s) {
-			auto iter = search(str.begin(), str.end(), word.begin(), word.end());
-			if (iter != str.end())
-				cout << str << endl;
-		}
-		cout << endl;
-	}
+	// 키보드에서 입력한 단어를 사전식 오름차순 정렬하여 출력하라
+	set<String> s{ istream_iterator<String>{cin}, {} };
+	for (const String& s : s)
+		cout << s << endl;
 
 	//save("main.cpp");
 }
