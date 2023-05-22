@@ -11,6 +11,7 @@
 #include <fstream>
 #include <vector>
 #include <algorithm>
+#include <ranges>
 #include "save.h"
 #include "String.h"
 
@@ -18,40 +19,33 @@ using namespace std;
 
 int main()
 {
-	// [문제] "이상한 나라의 앨리스.txt"에 사용된 문자와 사용된 횟수를 출력하라.
-	// a - 100
-	// ...
-	// z - 2
-
+	// [문제] "이상한 나라의 앨리스.txt"에 사용된 단어와 상용된 횟수를 출력하라.
 	ifstream in{ "이상한 나라의 앨리스.txt" };
 	if (!in) exit(0);
 
+	map<String, int> Simap;
 
-	map<char, int> cimap;
-	char c;
-	while (in >> c) {
-		if (isalpha(c))
-			cimap[tolower(c)]++;
-	}
+	String word;
+	while (in >> word)
+		Simap[word]++;
 
-	//for (auto& [문자, 개수] : cimap)
-	//	cout << 문자 << " - " << 개수 << endl;
+	/*for (auto& [word, count] : Simap)
+		cout << word << " - " << count << endl;*/
 
-	// [문제] 많이 사용된 순서로 출력하라
-	multimap<int, char, greater<int>> icmap; // 그냥 map으로 하면 개수가 같은 문자가 있을 때 문제 발생
-	for (auto& [문자, 개수] : cimap)
-		icmap.emplace(개수, 문자);
+	// 많이 사용된 단어기준 내림차순으로 출력하라.
+	/*multimap<int, String, greater<int>> iSmap;
+	for (auto& [word, count] : Simap)
+		iSmap.emplace(count, word);
 
-	for (auto& [개수, 문자] : icmap)
-		cout << 문자 << " - " << 개수 << endl;
+	for (const auto& [count, word] : iSmap | views::take(100))
+		cout << count << "\t- " << word << endl;*/
 
-	//vector<pair<char, int>> v{ cimap.begin(), cimap.end() };
-	//sort(v.begin(), v.end(), [](const auto& a, const auto& b) {
-	//	return a.second > b.second;
-	//	});
+	multimap<int, String> iSmap;
+	for (auto& [word, count] : Simap)
+		iSmap.emplace(count, word);
 
-	//for (const auto& [문자, 개수] : v)
-	//	cout << 문자 << " - " << 개수 << endl;
+	for (const auto& [count, word] : iSmap | views::reverse | views::take(100))
+		cout << count << "\t- " << word << endl;
 
-	save("main.cpp");
+	//save("main.cpp");
 }
