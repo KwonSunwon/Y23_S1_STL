@@ -38,20 +38,20 @@ int main()
 	//	cout << 문자 << " - " << 개수 << endl;
 
 	// [문제] 많이 사용된 순서로 출력하라
-	/*map<int, char, greater<int>> icmap;
+	multimap<int, char, greater<int>> icmap; // 그냥 map으로 하면 개수가 같은 문자가 있을 때 문제 발생
 	for (auto& [문자, 개수] : cimap)
-		icmap[개수] = 문자;
+		icmap.emplace(개수, 문자);
 
 	for (auto& [개수, 문자] : icmap)
-		cout << 문자 << " - " << 개수 << endl;*/
-
-	vector<pair<char, int>> v{ cimap.begin(), cimap.end() };
-	sort(v.begin(), v.end(), [](const auto& a, const auto& b) {
-		return a.second > b.second;
-		});
-
-	for (const auto& [문자, 개수] : v)
 		cout << 문자 << " - " << 개수 << endl;
+
+	//vector<pair<char, int>> v{ cimap.begin(), cimap.end() };
+	//sort(v.begin(), v.end(), [](const auto& a, const auto& b) {
+	//	return a.second > b.second;
+	//	});
+
+	//for (const auto& [문자, 개수] : v)
+	//	cout << 문자 << " - " << 개수 << endl;
 
 	save("main.cpp");
 }
