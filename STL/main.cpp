@@ -28,6 +28,11 @@ int main()
 
 	cout << "맵의 원소 수 - " << game.size() << endl;
 
+	// 맵의 키값을 변경하고 싶다면 extract 멤버를 이용한다.(since C++17)
+	auto handle = game.extract("펄 어비스");
+	handle.key() = "펄어비스";
+	game.insert(move(handle));
+
 	for (const auto& [회사, 게임들] : game) {
 		cout << 회사 << " - ";
 		for (const String& 게임 : 게임들)
