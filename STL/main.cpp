@@ -33,6 +33,16 @@ int main()
 	handle.key() = "펄어비스";
 	game.insert(move(handle));
 
+	// 회사 하나에 게임을 추가한다.
+	//game["라이엇"].push_back("레전드오브룬테라"); // 연관배열(associative array)
+	//list<String>& val = game["라이엇"];
+	auto& val = game["라이엇"]; // 제대로 알고 사용
+	val.insert(val.begin(), "팀파이터");
+
+	//auto it = game.find("라이엇");
+	//if (it != game.end())
+	//	it->second.push_back("레전드오브룬테라");
+
 	for (const auto& [회사, 게임들] : game) {
 		cout << 회사 << " - ";
 		for (const String& 게임 : 게임들)
@@ -40,5 +50,5 @@ int main()
 		cout << endl;
 	}
 
-	//save("main.cpp");
+	save("main.cpp");
 }
