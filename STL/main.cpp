@@ -16,12 +16,30 @@
 
 using namespace std;
 
+void print(const auto& us)
+{
+	for (int i = 0; i < us.bucket_count(); ++i) {
+		cout << "[" << i << "]";
+		for (auto p = us.begin(i); p != us.end(i); ++p)
+			cout << " - " << *p;
+		cout << endl;
+	}
+	cout << "-----------------------------------------------------" << endl;
+	for (int n : us)
+		cout << n << ' ';
+	cout << endl << endl;
+}
+
 int main()
 {
-	unordered_set<int> us = { 4, 1, 3, 2 };
+	unordered_multiset<int> us = { 1, 2, 3, 4, 1, 1, 1 };
 
-	for (int n : us)
-		cout << n << " ";
+	print(us);
 
-	save("main.cpp");
+	for (int i = 0; i < 60; ++i)
+		us.insert(i);
+
+	print(us);
+
+	//save("main.cpp");
 }
