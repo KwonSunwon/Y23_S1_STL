@@ -25,19 +25,21 @@ void print(const auto& us)
 		cout << endl;
 	}
 	cout << "-----------------------------------------------------" << endl;
-	for (int n : us)
+	for (const auto& n : us)
 		cout << n << ' ';
 	cout << endl << endl;
 }
 
+template <>
+struct hash<String> {
+	size_t operator()(const String& str) const {
+		return hash<string>()(str.getString());
+	}
+};
+
 int main()
 {
-	unordered_multiset<int> us = { 1, 2, 3, 4, 1, 1, 1 };
-
-	print(us);
-
-	for (int i = 0; i < 60; ++i)
-		us.insert(i);
+	unordered_set<String, hash<String>> us{"C++", "STL", "Container", "Iterator", "Algorithm"};
 
 	print(us);
 
